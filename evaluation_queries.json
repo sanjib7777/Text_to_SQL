@@ -1,0 +1,366 @@
+﻿{
+  "dataset_name": "sales_report_eval_queries",
+  "description": "Evaluation queries with explicit required columns, fixed company and branch filters, and multi-table coverage.",
+  "queries": [
+    {
+      "id": 1,
+      "type": "easy",
+      "query": "Required columns: ORDER_NO, ORDER_DATE, CUSTOMER_CODE, ITEM_CODE, CALC_TOTAL_PRICE. Show non-deleted sales orders for branch 01.01 sorted by ORDER_DATE.",
+      "true_sql": "SELECT o.ORDER_NO, o.ORDER_DATE, o.CUSTOMER_CODE, o.ITEM_CODE, o.CALC_TOTAL_PRICE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.BRANCH_CODE = '01.01' AND o.DELETED_FLAG = 'N' ORDER BY o.ORDER_DATE",
+      "company code": "01",
+      "branch code": "01.01"
+    },
+    {
+      "id": 2,
+      "type": "easy",
+      "query": "Required columns: SALES_NO, SALES_DATE, CUSTOMER_CODE, ITEM_CODE, CALC_TOTAL_PRICE. Show invoice lines for branch 01.02.",
+      "true_sql": "SELECT i.SALES_NO, i.SALES_DATE, i.CUSTOMER_CODE, i.ITEM_CODE, i.CALC_TOTAL_PRICE FROM SA_SALES_INVOICE i WHERE i.COMPANY_CODE = '01' AND i.BRANCH_CODE = '01.02' AND i.DELETED_FLAG = 'N' ORDER BY i.SALES_DATE",
+      "company code": "01",
+      "branch code": "01.02"
+    },
+    {
+      "id": 3,
+      "type": "easy",
+      "query": "Required columns: CHALAN_NO, CHALAN_DATE, CUSTOMER_CODE, ITEM_CODE, CALC_TOTAL_PRICE. Show chalan lines for branch 01.03.",
+      "true_sql": "SELECT c.CHALAN_NO, c.CHALAN_DATE, c.CUSTOMER_CODE, c.ITEM_CODE, c.CALC_TOTAL_PRICE FROM SA_SALES_CHALAN c WHERE c.COMPANY_CODE = '01' AND c.BRANCH_CODE = '01.03' AND c.DELETED_FLAG = 'N' ORDER BY c.CHALAN_DATE",
+      "company code": "01",
+      "branch code": "01.03"
+    },
+    {
+      "id": 4,
+      "type": "easy",
+      "query": "Required columns: RETURN_NO, RETURN_DATE, CUSTOMER_CODE, ITEM_CODE, CALC_TOTAL_PRICE. Show sales return lines for branch 01.04.",
+      "true_sql": "SELECT r.RETURN_NO, r.RETURN_DATE, r.CUSTOMER_CODE, r.ITEM_CODE, r.CALC_TOTAL_PRICE FROM SA_SALES_RETURN r WHERE r.COMPANY_CODE = '01' AND r.BRANCH_CODE = '01.04' AND r.DELETED_FLAG = 'N' ORDER BY r.RETURN_DATE",
+      "company code": "01",
+      "branch code": "01.04"
+    },
+    {
+      "id": 5,
+      "type": "easy",
+      "query": "Required columns: ORDER_NO, ITEM_CODE, ITEM_EDESC, UNIT_PRICE. Show order lines with item description for branch 01.05.",
+      "true_sql": "SELECT o.ORDER_NO, o.ITEM_CODE, im.ITEM_EDESC, o.UNIT_PRICE FROM SA_SALES_ORDER o JOIN IP_ITEM_MASTER_SETUP im ON im.COMPANY_CODE = o.COMPANY_CODE AND im.ITEM_CODE = o.ITEM_CODE WHERE o.COMPANY_CODE = '01' AND o.BRANCH_CODE = '01.05' AND o.DELETED_FLAG = 'N' ORDER BY o.ORDER_DATE",
+      "company code": "01",
+      "branch code": "01.05"
+    },
+    {
+      "id": 6,
+      "type": "easy",
+      "query": "Required columns: ORDER_NO, CUSTOMER_CODE, CUSTOMER_EDESC, CALC_TOTAL_PRICE. Show order lines with customer name for branch 01.01.",
+      "true_sql": "SELECT o.ORDER_NO, o.CUSTOMER_CODE, cs.CUSTOMER_EDESC, o.CALC_TOTAL_PRICE FROM SA_SALES_ORDER o JOIN SA_CUSTOMER_SETUP cs ON cs.COMPANY_CODE = o.COMPANY_CODE AND cs.CUSTOMER_CODE = o.CUSTOMER_CODE WHERE o.COMPANY_CODE = '01' AND o.BRANCH_CODE = '01.01' AND o.DELETED_FLAG = 'N' ORDER BY o.ORDER_DATE",
+      "company code": "01",
+      "branch code": "01.01"
+    },
+    {
+      "id": 7,
+      "type": "easy",
+      "query": "Required columns: ORDER_NO, ITEM_CODE, PART_NUMBER, BRAND_NAME. Show item spec details for ordered items in branch 01.02.",
+      "true_sql": "SELECT o.ORDER_NO, o.ITEM_CODE, sp.PART_NUMBER, sp.BRAND_NAME FROM SA_SALES_ORDER o JOIN IP_ITEM_SPEC_SETUP sp ON sp.COMPANY_CODE = o.COMPANY_CODE AND sp.ITEM_CODE = o.ITEM_CODE WHERE o.COMPANY_CODE = '01' AND o.BRANCH_CODE = '01.02' AND o.DELETED_FLAG = 'N' AND sp.DELETED_FLAG = 'N' ORDER BY o.ORDER_DATE",
+      "company code": "01",
+      "branch code": "01.02"
+    },
+    {
+      "id": 8,
+      "type": "easy",
+      "query": "Required columns: SALES_NO, ITEM_CODE, ITEM_EDESC, CATEGORY_CODE. Show invoice item and category code for branch 01.03.",
+      "true_sql": "SELECT i.SALES_NO, i.ITEM_CODE, im.ITEM_EDESC, im.CATEGORY_CODE FROM SA_SALES_INVOICE i JOIN IP_ITEM_MASTER_SETUP im ON im.COMPANY_CODE = i.COMPANY_CODE AND im.ITEM_CODE = i.ITEM_CODE WHERE i.COMPANY_CODE = '01' AND i.BRANCH_CODE = '01.03' AND i.DELETED_FLAG = 'N' ORDER BY i.SALES_DATE",
+      "company code": "01",
+      "branch code": "01.03"
+    },
+    {
+      "id": 9,
+      "type": "easy",
+      "query": "Required columns: CHALAN_NO, CHALAN_DATE, ITEM_CODE, QUANTITY, UNIT_PRICE. Show chalan lines with quantity for branch 01.04.",
+      "true_sql": "SELECT c.CHALAN_NO, c.CHALAN_DATE, c.ITEM_CODE, c.QUANTITY, c.UNIT_PRICE FROM SA_SALES_CHALAN c WHERE c.COMPANY_CODE = '01' AND c.BRANCH_CODE = '01.04' AND c.DELETED_FLAG = 'N' ORDER BY c.CHALAN_DATE",
+      "company code": "01",
+      "branch code": "01.04"
+    },
+    {
+      "id": 10,
+      "type": "easy",
+      "query": "Required columns: RETURN_NO, RETURN_DATE, ITEM_CODE, QUANTITY, REASON. Show return lines and reason for branch 01.05.",
+      "true_sql": "SELECT r.RETURN_NO, r.RETURN_DATE, r.ITEM_CODE, r.QUANTITY, r.REASON FROM SA_SALES_RETURN r WHERE r.COMPANY_CODE = '01' AND r.BRANCH_CODE = '01.05' AND r.DELETED_FLAG = 'N' ORDER BY r.RETURN_DATE",
+      "company code": "01",
+      "branch code": "01.05"
+    },
+    {
+      "id": 11,
+      "type": "easy",
+      "query": "Required columns: ORDER_NO, ORDER_DATE, CREATED_BY, LOGIN_EDESC. Show who created each order line in branch 01.01.",
+      "true_sql": "SELECT o.ORDER_NO, o.ORDER_DATE, o.CREATED_BY, u.LOGIN_EDESC FROM SA_SALES_ORDER o LEFT JOIN SC_APPLICATION_USERS u ON u.COMPANY_CODE = o.COMPANY_CODE AND u.LOGIN_CODE = o.CREATED_BY WHERE o.COMPANY_CODE = '01' AND o.BRANCH_CODE = '01.01' AND o.DELETED_FLAG = 'N' ORDER BY o.ORDER_DATE",
+      "company code": "01",
+      "branch code": "01.01"
+    },
+    {
+      "id": 12,
+      "type": "easy",
+      "query": "Required columns: ORDER_NO, ORDER_DATE, ITEM_CODE, ITEM_EDESC, CATEGORY_EDESC. Show order lines with item category name for branch 01.02.",
+      "true_sql": "SELECT o.ORDER_NO, o.ORDER_DATE, o.ITEM_CODE, im.ITEM_EDESC, cat.CATEGORY_EDESC FROM SA_SALES_ORDER o JOIN IP_ITEM_MASTER_SETUP im ON im.COMPANY_CODE = o.COMPANY_CODE AND im.ITEM_CODE = o.ITEM_CODE LEFT JOIN IP_CATEGORY_CODE cat ON cat.COMPANY_CODE = im.COMPANY_CODE AND cat.CATEGORY_CODE = im.CATEGORY_CODE WHERE o.COMPANY_CODE = '01' AND o.BRANCH_CODE = '01.02' AND o.DELETED_FLAG = 'N' ORDER BY o.ORDER_DATE",
+      "company code": "01",
+      "branch code": "01.02"
+    },
+    {
+      "id": 13,
+      "type": "easy",
+      "query": "Required columns: SALES_NO, SALES_DATE, CUSTOMER_CODE, PAYMENT_MODE, CALC_TOTAL_PRICE. Show invoice payment mode details for branch 01.03.",
+      "true_sql": "SELECT i.SALES_NO, i.SALES_DATE, i.CUSTOMER_CODE, i.PAYMENT_MODE, i.CALC_TOTAL_PRICE FROM SA_SALES_INVOICE i WHERE i.COMPANY_CODE = '01' AND i.BRANCH_CODE = '01.03' AND i.DELETED_FLAG = 'N' ORDER BY i.SALES_DATE",
+      "company code": "01",
+      "branch code": "01.03"
+    },
+    {
+      "id": 14,
+      "type": "easy",
+      "query": "Required columns: RETURN_NO, RETURN_DATE, CUSTOMER_CODE, ITEM_CODE, CALC_TOTAL_PRICE. Show returns in July 2025 for branch 01.04.",
+      "true_sql": "SELECT r.RETURN_NO, r.RETURN_DATE, r.CUSTOMER_CODE, r.ITEM_CODE, r.CALC_TOTAL_PRICE FROM SA_SALES_RETURN r WHERE r.COMPANY_CODE = '01' AND r.BRANCH_CODE = '01.04' AND r.DELETED_FLAG = 'N' AND TRUNC(r.RETURN_DATE) >= TO_DATE('2025-07-01', 'YYYY-MM-DD') AND TRUNC(r.RETURN_DATE) < TO_DATE('2025-08-01', 'YYYY-MM-DD') ORDER BY r.RETURN_DATE",
+      "company code": "01",
+      "branch code": "01.04"
+    },
+    {
+      "id": 15,
+      "type": "easy",
+      "query": "Required columns: CHALAN_NO, CHALAN_DATE, CUSTOMER_CODE, ITEM_CODE, CALC_TOTAL_PRICE. Show top 20 highest value chalan lines for branch 01.05.",
+      "true_sql": "SELECT * FROM (SELECT c.CHALAN_NO, c.CHALAN_DATE, c.CUSTOMER_CODE, c.ITEM_CODE, c.CALC_TOTAL_PRICE FROM SA_SALES_CHALAN c WHERE c.COMPANY_CODE = '01' AND c.BRANCH_CODE = '01.05' AND c.DELETED_FLAG = 'N' ORDER BY c.CALC_TOTAL_PRICE DESC) WHERE ROWNUM <= 20",
+      "company code": "01",
+      "branch code": "01.05"
+    },
+    {
+      "id": 16,
+      "type": "medium",
+      "query": "Required columns: ITEM_CODE, ITEM_EDESC, TOTAL_SALES. Show total order value by item in 2025 for branch 01.01.",
+      "true_sql": "SELECT o.ITEM_CODE, im.ITEM_EDESC, SUM(o.CALC_TOTAL_PRICE) AS TOTAL_SALES FROM SA_SALES_ORDER o JOIN IP_ITEM_MASTER_SETUP im ON im.COMPANY_CODE = o.COMPANY_CODE AND im.ITEM_CODE = o.ITEM_CODE WHERE o.COMPANY_CODE = '01' AND o.BRANCH_CODE = '01.01' AND o.DELETED_FLAG = 'N' AND TRUNC(o.ORDER_DATE) >= TO_DATE('2025-01-01', 'YYYY-MM-DD') AND TRUNC(o.ORDER_DATE) < TO_DATE('2026-01-01', 'YYYY-MM-DD') GROUP BY o.ITEM_CODE, im.ITEM_EDESC ORDER BY TOTAL_SALES DESC",
+      "company code": "01",
+      "branch code": "01.01"
+    },
+    {
+      "id": 17,
+      "type": "medium",
+      "query": "Required columns: CUSTOMER_CODE, CUSTOMER_EDESC, ORDER_COUNT. Count invoice lines per customer for branch 01.02.",
+      "true_sql": "SELECT i.CUSTOMER_CODE, cs.CUSTOMER_EDESC, COUNT(*) AS ORDER_COUNT FROM SA_SALES_INVOICE i JOIN SA_CUSTOMER_SETUP cs ON cs.COMPANY_CODE = i.COMPANY_CODE AND cs.CUSTOMER_CODE = i.CUSTOMER_CODE WHERE i.COMPANY_CODE = '01' AND i.BRANCH_CODE = '01.02' AND i.DELETED_FLAG = 'N' GROUP BY i.CUSTOMER_CODE, cs.CUSTOMER_EDESC ORDER BY ORDER_COUNT DESC",
+      "company code": "01",
+      "branch code": "01.02"
+    },
+    {
+      "id": 18,
+      "type": "medium",
+      "query": "Required columns: ORDER_MONTH, TOTAL_REVENUE. Show monthly order revenue in 2025 for branch 01.03.",
+      "true_sql": "SELECT TO_CHAR(o.ORDER_DATE, 'YYYY-MM') AS ORDER_MONTH, SUM(o.CALC_TOTAL_PRICE) AS TOTAL_REVENUE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.BRANCH_CODE = '01.03' AND o.DELETED_FLAG = 'N' AND TRUNC(o.ORDER_DATE) >= TO_DATE('2025-01-01', 'YYYY-MM-DD') AND TRUNC(o.ORDER_DATE) < TO_DATE('2026-01-01', 'YYYY-MM-DD') GROUP BY TO_CHAR(o.ORDER_DATE, 'YYYY-MM') ORDER BY ORDER_MONTH",
+      "company code": "01",
+      "branch code": "01.03"
+    },
+    {
+      "id": 19,
+      "type": "medium",
+      "query": "Required columns: ITEM_CODE, ITEM_EDESC, AVG_UNIT_PRICE. Show average invoice unit price per item for branch 01.04.",
+      "true_sql": "SELECT i.ITEM_CODE, im.ITEM_EDESC, AVG(i.UNIT_PRICE) AS AVG_UNIT_PRICE FROM SA_SALES_INVOICE i JOIN IP_ITEM_MASTER_SETUP im ON im.COMPANY_CODE = i.COMPANY_CODE AND im.ITEM_CODE = i.ITEM_CODE WHERE i.COMPANY_CODE = '01' AND i.BRANCH_CODE = '01.04' AND i.DELETED_FLAG = 'N' GROUP BY i.ITEM_CODE, im.ITEM_EDESC ORDER BY AVG_UNIT_PRICE DESC",
+      "company code": "01",
+      "branch code": "01.04"
+    },
+    {
+      "id": 20,
+      "type": "medium",
+      "query": "Required columns: CUSTOMER_CODE, TOTAL_RETURN. Show total return value by customer for branch 01.05.",
+      "true_sql": "SELECT r.CUSTOMER_CODE, SUM(r.CALC_TOTAL_PRICE) AS TOTAL_RETURN FROM SA_SALES_RETURN r WHERE r.COMPANY_CODE = '01' AND r.BRANCH_CODE = '01.05' AND r.DELETED_FLAG = 'N' GROUP BY r.CUSTOMER_CODE ORDER BY TOTAL_RETURN DESC",
+      "company code": "01",
+      "branch code": "01.05"
+    },
+    {
+      "id": 21,
+      "type": "medium",
+      "query": "Required columns: ITEM_CODE, ITEM_EDESC, RETURN_QTY. Show top returned items by quantity for branch.",
+      "true_sql": "SELECT r.ITEM_CODE, im.ITEM_EDESC, SUM(r.QUANTITY) AS RETURN_QTY FROM SA_SALES_RETURN r JOIN IP_ITEM_MASTER_SETUP im ON im.COMPANY_CODE = r.COMPANY_CODE AND im.ITEM_CODE = r.ITEM_CODE WHERE r.COMPANY_CODE = '01' AND r.BRANCH_CODE = '01.01' AND r.DELETED_FLAG = 'N' GROUP BY r.ITEM_CODE, im.ITEM_EDESC ORDER BY RETURN_QTY DESC",
+      "company code": "01",
+      "branch code": "01.01"
+    },
+    {
+      "id": 22,
+      "type": "medium",
+      "query": "Required columns: CATEGORY_CODE, CATEGORY_EDESC, TOTAL_SALES. Show invoice revenue by category for branch 01.02.",
+      "true_sql": "SELECT im.CATEGORY_CODE, cat.CATEGORY_EDESC, SUM(i.CALC_TOTAL_PRICE) AS TOTAL_SALES FROM SA_SALES_INVOICE i JOIN IP_ITEM_MASTER_SETUP im ON im.COMPANY_CODE = i.COMPANY_CODE AND im.ITEM_CODE = i.ITEM_CODE LEFT JOIN IP_CATEGORY_CODE cat ON cat.COMPANY_CODE = im.COMPANY_CODE AND cat.CATEGORY_CODE = im.CATEGORY_CODE WHERE i.COMPANY_CODE = '01' AND i.BRANCH_CODE = '01.02' AND i.DELETED_FLAG = 'N' GROUP BY im.CATEGORY_CODE, cat.CATEGORY_EDESC ORDER BY TOTAL_SALES DESC",
+      "company code": "01",
+      "branch code": "01.02"
+    },
+    {
+      "id": 23,
+      "type": "medium",
+      "query": "Required columns: ORDER_NO, ITEM_CODE, ITEM_EDESC, PART_NUMBER, BRAND_NAME. Show order lines with item spec fields for branch 01.03.",
+      "true_sql": "SELECT o.ORDER_NO, o.ITEM_CODE, im.ITEM_EDESC, sp.PART_NUMBER, sp.BRAND_NAME FROM SA_SALES_ORDER o JOIN IP_ITEM_MASTER_SETUP im ON im.COMPANY_CODE = o.COMPANY_CODE AND im.ITEM_CODE = o.ITEM_CODE JOIN IP_ITEM_SPEC_SETUP sp ON sp.COMPANY_CODE = o.COMPANY_CODE AND sp.ITEM_CODE = o.ITEM_CODE WHERE o.COMPANY_CODE = '01' AND o.BRANCH_CODE = '01.03' AND o.DELETED_FLAG = 'N' AND sp.DELETED_FLAG = 'N' ORDER BY o.ORDER_DATE",
+      "company code": "01",
+      "branch code": "01.03"
+    },
+    {
+      "id": 24,
+      "type": "medium",
+      "query": "Required columns: LOGIN_CODE, LOGIN_EDESC, CREATED_LINE_COUNT. Count invoice lines created by each user in branch 01.04.",
+      "true_sql": "SELECT i.CREATED_BY AS LOGIN_CODE, u.LOGIN_EDESC, COUNT(*) AS CREATED_LINE_COUNT FROM SA_SALES_INVOICE i LEFT JOIN SC_APPLICATION_USERS u ON u.COMPANY_CODE = i.COMPANY_CODE AND u.LOGIN_CODE = i.CREATED_BY WHERE i.COMPANY_CODE = '01' AND i.BRANCH_CODE = '01.04' AND i.DELETED_FLAG = 'N' GROUP BY i.CREATED_BY, u.LOGIN_EDESC ORDER BY CREATED_LINE_COUNT DESC",
+      "company code": "01",
+      "branch code": "01.04"
+    },
+    {
+      "id": 25,
+      "type": "medium",
+      "query": "Required columns: SALES_NO, SALES_DATE, CUSTOMER_CODE, ITEM_CODE, CALC_TOTAL_PRICE. Show invoice lines where CALC_TOTAL_PRICE > 1000 in branch 01.05.",
+      "true_sql": "SELECT i.SALES_NO, i.SALES_DATE, i.CUSTOMER_CODE, i.ITEM_CODE, i.CALC_TOTAL_PRICE FROM SA_SALES_INVOICE i WHERE i.COMPANY_CODE = '01' AND i.BRANCH_CODE = '01.05' AND i.DELETED_FLAG = 'N' AND i.CALC_TOTAL_PRICE > 1000 ORDER BY i.CALC_TOTAL_PRICE DESC",
+      "company code": "01",
+      "branch code": "01.05"
+    },
+    {
+      "id": 26,
+      "type": "medium",
+      "query": "Required columns: CHALAN_MONTH, CHALAN_COUNT. Show monthly chalan count in 2025 for branch 01.01.",
+      "true_sql": "SELECT TO_CHAR(c.CHALAN_DATE, 'YYYY-MM') AS CHALAN_MONTH, COUNT(*) AS CHALAN_COUNT FROM SA_SALES_CHALAN c WHERE c.COMPANY_CODE = '01' AND c.BRANCH_CODE = '01.01' AND c.DELETED_FLAG = 'N' AND TRUNC(c.CHALAN_DATE) >= TO_DATE('2025-01-01', 'YYYY-MM-DD') AND TRUNC(c.CHALAN_DATE) < TO_DATE('2026-01-01', 'YYYY-MM-DD') GROUP BY TO_CHAR(c.CHALAN_DATE, 'YYYY-MM') ORDER BY CHALAN_MONTH",
+      "company code": "01",
+      "branch code": "01.01"
+    },
+    {
+      "id": 27,
+      "type": "medium",
+      "query": "Required columns: CUSTOMER_CODE, CUSTOMER_EDESC, INVOICE_TOTAL. Show top 10 customers by invoice value for branch 01.02.",
+      "true_sql": "SELECT * FROM (SELECT i.CUSTOMER_CODE, cs.CUSTOMER_EDESC, SUM(i.CALC_TOTAL_PRICE) AS INVOICE_TOTAL FROM SA_SALES_INVOICE i JOIN SA_CUSTOMER_SETUP cs ON cs.COMPANY_CODE = i.COMPANY_CODE AND cs.CUSTOMER_CODE = i.CUSTOMER_CODE WHERE i.COMPANY_CODE = '01' AND i.BRANCH_CODE = '01.02' AND i.DELETED_FLAG = 'N' GROUP BY i.CUSTOMER_CODE, cs.CUSTOMER_EDESC ORDER BY INVOICE_TOTAL DESC) WHERE ROWNUM <= 10",
+      "company code": "01",
+      "branch code": "01.02"
+    },
+    {
+      "id": 28,
+      "type": "medium",
+      "query": "Required columns: ITEM_CODE, ITEM_EDESC, ORDER_COUNT. Show items with more than 5 order lines in 2025 for branch 01.03.",
+      "true_sql": "SELECT o.ITEM_CODE, im.ITEM_EDESC, COUNT(*) AS ORDER_COUNT FROM SA_SALES_ORDER o JOIN IP_ITEM_MASTER_SETUP im ON im.COMPANY_CODE = o.COMPANY_CODE AND im.ITEM_CODE = o.ITEM_CODE WHERE o.COMPANY_CODE = '01' AND o.BRANCH_CODE = '01.03' AND o.DELETED_FLAG = 'N' AND TRUNC(o.ORDER_DATE) >= TO_DATE('2025-01-01', 'YYYY-MM-DD') AND TRUNC(o.ORDER_DATE) < TO_DATE('2026-01-01', 'YYYY-MM-DD') GROUP BY o.ITEM_CODE, im.ITEM_EDESC HAVING COUNT(*) > 5 ORDER BY ORDER_COUNT DESC",
+      "company code": "01",
+      "branch code": "01.03"
+    },
+    {
+      "id": 29,
+      "type": "medium",
+      "query": "Required columns: RETURN_MONTH, TOTAL_RETURN. Show monthly total return value in 2025 for branch 01.04.",
+      "true_sql": "SELECT TO_CHAR(r.RETURN_DATE, 'YYYY-MM') AS RETURN_MONTH, SUM(r.CALC_TOTAL_PRICE) AS TOTAL_RETURN FROM SA_SALES_RETURN r WHERE r.COMPANY_CODE = '01' AND r.BRANCH_CODE = '01.04' AND r.DELETED_FLAG = 'N' AND TRUNC(r.RETURN_DATE) >= TO_DATE('2025-01-01', 'YYYY-MM-DD') AND TRUNC(r.RETURN_DATE) < TO_DATE('2026-01-01', 'YYYY-MM-DD') GROUP BY TO_CHAR(r.RETURN_DATE, 'YYYY-MM') ORDER BY RETURN_MONTH",
+      "company code": "01",
+      "branch code": "01.04"
+    },
+    {
+      "id": 30,
+      "type": "medium",
+      "query": "Required columns: SALES_NO, SALES_DATE, CUSTOMER_CODE, ITEM_CODE, UNIT_PRICE, AVG_BRANCH_UNIT_PRICE. Show invoice lines where UNIT_PRICE is above branch average in branch 01.05.",
+      "true_sql": "SELECT i.SALES_NO, i.SALES_DATE, i.CUSTOMER_CODE, i.ITEM_CODE, i.UNIT_PRICE, (SELECT AVG(i2.UNIT_PRICE) FROM SA_SALES_INVOICE i2 WHERE i2.COMPANY_CODE = '01' AND i2.BRANCH_CODE = '01.05' AND i2.DELETED_FLAG = 'N') AS AVG_BRANCH_UNIT_PRICE FROM SA_SALES_INVOICE i WHERE i.COMPANY_CODE = '01' AND i.BRANCH_CODE = '01.05' AND i.DELETED_FLAG = 'N' AND i.UNIT_PRICE > (SELECT AVG(i2.UNIT_PRICE) FROM SA_SALES_INVOICE i2 WHERE i2.COMPANY_CODE = '01' AND i2.BRANCH_CODE = '01.05' AND i2.DELETED_FLAG = 'N') ORDER BY i.UNIT_PRICE DESC",
+      "company code": "01",
+      "branch code": "01.05"
+    },
+    {
+      "id": 31,
+      "type": "medium",
+      "query": "Required columns: ORDER_NO, ORDER_DATE, CUSTOMER_CODE, ITEM_CODE, DELIVERY_DATE. Show pending-delivery order lines where DELIVERY_DATE is after ORDER_DATE for branch 01.01.",
+      "true_sql": "SELECT o.ORDER_NO, o.ORDER_DATE, o.CUSTOMER_CODE, o.ITEM_CODE, o.DELIVERY_DATE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.BRANCH_CODE = '01.01' AND o.DELETED_FLAG = 'N' AND o.DELIVERY_DATE > o.ORDER_DATE ORDER BY o.DELIVERY_DATE",
+      "company code": "01",
+      "branch code": "01.01"
+    },
+    {
+      "id": 32,
+      "type": "medium",
+      "query": "Required columns: CATEGORY_CODE, CATEGORY_EDESC, CALC_TOTAL_PRICE. Show return value by category for branch 01.02.",
+      "true_sql": "SELECT im.CATEGORY_CODE, cat.CATEGORY_EDESC, SUM(r.CALC_TOTAL_PRICE) AS RETURN_TOTAL FROM SA_SALES_RETURN r JOIN IP_ITEM_MASTER_SETUP im ON im.COMPANY_CODE = r.COMPANY_CODE AND im.ITEM_CODE = r.ITEM_CODE LEFT JOIN IP_CATEGORY_CODE cat ON cat.COMPANY_CODE = im.COMPANY_CODE AND cat.CATEGORY_CODE = im.CATEGORY_CODE WHERE r.COMPANY_CODE = '01' AND r.BRANCH_CODE = '01.02' AND r.DELETED_FLAG = 'N' GROUP BY im.CATEGORY_CODE, cat.CATEGORY_EDESC ORDER BY RETURN_TOTAL DESC",
+      "company code": "01",
+      "branch code": "01.02"
+    },
+    {
+      "id": 33,
+      "type": "medium",
+      "query": "Required columns: ITEM_CODE, ITEM_EDESC, CHALAN_QTY, CHALAN_REVENUE. Show chalan quantity and value by item for branch 01.03.",
+      "true_sql": "SELECT c.ITEM_CODE, im.ITEM_EDESC, SUM(c.QUANTITY) AS CHALAN_QTY, SUM(c.CALC_TOTAL_PRICE) AS CHALAN_REVENUE FROM SA_SALES_CHALAN c JOIN IP_ITEM_MASTER_SETUP im ON im.COMPANY_CODE = c.COMPANY_CODE AND im.ITEM_CODE = c.ITEM_CODE WHERE c.COMPANY_CODE = '01' AND c.BRANCH_CODE = '01.03' AND c.DELETED_FLAG = 'N' GROUP BY c.ITEM_CODE, im.ITEM_EDESC ORDER BY CHALAN_REVENUE DESC",
+      "company code": "01",
+      "branch code": "01.03"
+    },
+    {
+      "id": 34,
+      "type": "hard",
+      "query": "Required columns: ORDER_MONTH, TOTAL_REVENUE, PREVIOUS_MONTH_REVENUE, GROWTH_AMOUNT. Show month-over-month order revenue growth in 2025 for branch 01.04.",
+      "true_sql": "SELECT t.ORDER_MONTH, t.TOTAL_REVENUE, LAG(t.TOTAL_REVENUE) OVER (ORDER BY t.ORDER_MONTH) AS PREVIOUS_MONTH_REVENUE, t.TOTAL_REVENUE - LAG(t.TOTAL_REVENUE) OVER (ORDER BY t.ORDER_MONTH) AS GROWTH_AMOUNT FROM (SELECT TO_CHAR(o.ORDER_DATE, 'YYYY-MM') AS ORDER_MONTH, SUM(o.CALC_TOTAL_PRICE) AS TOTAL_REVENUE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.BRANCH_CODE = '01.04' AND o.DELETED_FLAG = 'N' AND TRUNC(o.ORDER_DATE) >= TO_DATE('2025-01-01', 'YYYY-MM-DD') AND TRUNC(o.ORDER_DATE) < TO_DATE('2026-01-01', 'YYYY-MM-DD') GROUP BY TO_CHAR(o.ORDER_DATE, 'YYYY-MM')) t ORDER BY t.ORDER_MONTH",
+      "company code": "01",
+      "branch code": "01.04"
+    },
+    {
+      "id": 35,
+      "type": "hard",
+      "query": "Required columns: CUSTOMER_CODE, CUSTOMER_EDESC, ORDER_COUNT, TOTAL_SALES. Find customers with at least 5 invoice lines and total above branch average customer total in branch 01.05.",
+      "true_sql": "SELECT i.CUSTOMER_CODE, cs.CUSTOMER_EDESC, COUNT(*) AS ORDER_COUNT, SUM(i.CALC_TOTAL_PRICE) AS TOTAL_SALES FROM SA_SALES_INVOICE i JOIN SA_CUSTOMER_SETUP cs ON cs.COMPANY_CODE = i.COMPANY_CODE AND cs.CUSTOMER_CODE = i.CUSTOMER_CODE WHERE i.COMPANY_CODE = '01' AND i.BRANCH_CODE = '01.05' AND i.DELETED_FLAG = 'N' GROUP BY i.CUSTOMER_CODE, cs.CUSTOMER_EDESC HAVING COUNT(*) >= 5 AND SUM(i.CALC_TOTAL_PRICE) > (SELECT AVG(x.CUST_TOTAL) FROM (SELECT SUM(i2.CALC_TOTAL_PRICE) AS CUST_TOTAL FROM SA_SALES_INVOICE i2 WHERE i2.COMPANY_CODE = '01' AND i2.BRANCH_CODE = '01.05' AND i2.DELETED_FLAG = 'N' GROUP BY i2.CUSTOMER_CODE) x) ORDER BY TOTAL_SALES DESC",
+      "company code": "01",
+      "branch code": "01.05"
+    },
+    {
+      "id": 36,
+      "type": "hard",
+      "query": "Required columns: ITEM_CODE, ITEM_EDESC, H1_QTY_FLAG, H2_QTY_FLAG. List items sold in both first half and second half of 2025 in branch 01.01.",
+      "true_sql": "SELECT o.ITEM_CODE, im.ITEM_EDESC, SUM(CASE WHEN TRUNC(o.ORDER_DATE) < TO_DATE('2025-07-01', 'YYYY-MM-DD') THEN 1 ELSE 0 END) AS H1_QTY_FLAG, SUM(CASE WHEN TRUNC(o.ORDER_DATE) >= TO_DATE('2025-07-01', 'YYYY-MM-DD') THEN 1 ELSE 0 END) AS H2_QTY_FLAG FROM SA_SALES_ORDER o JOIN IP_ITEM_MASTER_SETUP im ON im.COMPANY_CODE = o.COMPANY_CODE AND im.ITEM_CODE = o.ITEM_CODE WHERE o.COMPANY_CODE = '01' AND o.BRANCH_CODE = '01.01' AND o.DELETED_FLAG = 'N' AND TRUNC(o.ORDER_DATE) >= TO_DATE('2025-01-01', 'YYYY-MM-DD') AND TRUNC(o.ORDER_DATE) < TO_DATE('2026-01-01', 'YYYY-MM-DD') GROUP BY o.ITEM_CODE, im.ITEM_EDESC HAVING SUM(CASE WHEN TRUNC(o.ORDER_DATE) < TO_DATE('2025-07-01', 'YYYY-MM-DD') THEN 1 ELSE 0 END) > 0 AND SUM(CASE WHEN TRUNC(o.ORDER_DATE) >= TO_DATE('2025-07-01', 'YYYY-MM-DD') THEN 1 ELSE 0 END) > 0 ORDER BY im.ITEM_EDESC",
+      "company code": "01",
+      "branch code": "01.01"
+    },
+    {
+      "id": 37,
+      "type": "hard",
+      "query": "Required columns: CUSTOMER_CODE, FIRST_SALES_DATE, LAST_SALES_DATE, DAYS_SPAN. Show customers whose first-to-last invoice span is at least 120 days in branch 01.02.",
+      "true_sql": "SELECT i.CUSTOMER_CODE, MIN(i.SALES_DATE) AS FIRST_SALES_DATE, MAX(i.SALES_DATE) AS LAST_SALES_DATE, MAX(i.SALES_DATE) - MIN(i.SALES_DATE) AS DAYS_SPAN FROM SA_SALES_INVOICE i WHERE i.COMPANY_CODE = '01' AND i.BRANCH_CODE = '01.02' AND i.DELETED_FLAG = 'N' GROUP BY i.CUSTOMER_CODE HAVING MAX(i.SALES_DATE) - MIN(i.SALES_DATE) >= 120 ORDER BY DAYS_SPAN DESC",
+      "company code": "01",
+      "branch code": "01.02"
+    },
+    {
+      "id": 38,
+      "type": "hard",
+      "query": "Required columns: ITEM_CODE, ITEM_EDESC, ORDER_COUNT, AVG_UNIT_PRICE. Find high-volume and high-price items (ORDER_COUNT > 10 and AVG_UNIT_PRICE > 100) in branch 01.03.",
+      "true_sql": "SELECT o.ITEM_CODE, im.ITEM_EDESC, COUNT(*) AS ORDER_COUNT, AVG(o.UNIT_PRICE) AS AVG_UNIT_PRICE FROM SA_SALES_ORDER o JOIN IP_ITEM_MASTER_SETUP im ON im.COMPANY_CODE = o.COMPANY_CODE AND im.ITEM_CODE = o.ITEM_CODE WHERE o.COMPANY_CODE = '01' AND o.BRANCH_CODE = '01.03' AND o.DELETED_FLAG = 'N' GROUP BY o.ITEM_CODE, im.ITEM_EDESC HAVING COUNT(*) > 10 AND AVG(o.UNIT_PRICE) > 100 ORDER BY AVG_UNIT_PRICE DESC",
+      "company code": "01",
+      "branch code": "01.03"
+    },
+    {
+      "id": 39,
+      "type": "hard",
+      "query": "Required columns: CUSTOMER_CODE, JUL_SALES, AUG_SALES, DIFF_SALES. Show top 5 customers with largest sales increase from July to August 2025 in branch 01.04.",
+      "true_sql": "SELECT * FROM (SELECT i.CUSTOMER_CODE, SUM(CASE WHEN TRUNC(i.SALES_DATE) >= TO_DATE('2025-07-01', 'YYYY-MM-DD') AND TRUNC(i.SALES_DATE) < TO_DATE('2025-08-01', 'YYYY-MM-DD') THEN i.CALC_TOTAL_PRICE ELSE 0 END) AS JUL_SALES, SUM(CASE WHEN TRUNC(i.SALES_DATE) >= TO_DATE('2025-08-01', 'YYYY-MM-DD') AND TRUNC(i.SALES_DATE) < TO_DATE('2025-09-01', 'YYYY-MM-DD') THEN i.CALC_TOTAL_PRICE ELSE 0 END) AS AUG_SALES, SUM(CASE WHEN TRUNC(i.SALES_DATE) >= TO_DATE('2025-08-01', 'YYYY-MM-DD') AND TRUNC(i.SALES_DATE) < TO_DATE('2025-09-01', 'YYYY-MM-DD') THEN i.CALC_TOTAL_PRICE ELSE 0 END) - SUM(CASE WHEN TRUNC(i.SALES_DATE) >= TO_DATE('2025-07-01', 'YYYY-MM-DD') AND TRUNC(i.SALES_DATE) < TO_DATE('2025-08-01', 'YYYY-MM-DD') THEN i.CALC_TOTAL_PRICE ELSE 0 END) AS DIFF_SALES FROM SA_SALES_INVOICE i WHERE i.COMPANY_CODE = '01' AND i.BRANCH_CODE = '01.04' AND i.DELETED_FLAG = 'N' GROUP BY i.CUSTOMER_CODE ORDER BY DIFF_SALES DESC) WHERE ROWNUM <= 5",
+      "company code": "01",
+      "branch code": "01.04"
+    },
+    {
+      "id": 40,
+      "type": "hard",
+      "query": "Required columns: ITEM_CODE, ITEM_EDESC, ITEM_REVENUE, REVENUE_SHARE_PERCENT. Show items whose invoice revenue share is above 10% in branch 01.05.",
+      "true_sql": "SELECT i.ITEM_CODE, im.ITEM_EDESC, SUM(i.CALC_TOTAL_PRICE) AS ITEM_REVENUE, ROUND(100 * SUM(i.CALC_TOTAL_PRICE) / (SELECT SUM(i2.CALC_TOTAL_PRICE) FROM SA_SALES_INVOICE i2 WHERE i2.COMPANY_CODE = '01' AND i2.BRANCH_CODE = '01.05' AND i2.DELETED_FLAG = 'N'), 2) AS REVENUE_SHARE_PERCENT FROM SA_SALES_INVOICE i JOIN IP_ITEM_MASTER_SETUP im ON im.COMPANY_CODE = i.COMPANY_CODE AND im.ITEM_CODE = i.ITEM_CODE WHERE i.COMPANY_CODE = '01' AND i.BRANCH_CODE = '01.05' AND i.DELETED_FLAG = 'N' GROUP BY i.ITEM_CODE, im.ITEM_EDESC HAVING SUM(i.CALC_TOTAL_PRICE) > 0.10 * (SELECT SUM(i2.CALC_TOTAL_PRICE) FROM SA_SALES_INVOICE i2 WHERE i2.COMPANY_CODE = '01' AND i2.BRANCH_CODE = '01.05' AND i2.DELETED_FLAG = 'N') ORDER BY ITEM_REVENUE DESC",
+      "company code": "01",
+      "branch code": "01.05"
+    },
+    {
+      "id": 41,
+      "type": "hard",
+      "query": "Required columns: LOGIN_CODE, LOGIN_EDESC, LINE_COUNT, TOTAL_INVOICE_VALUE. Rank creators by invoice value in branch 01.01 and return top 5.",
+      "true_sql": "SELECT * FROM (SELECT i.CREATED_BY AS LOGIN_CODE, u.LOGIN_EDESC, COUNT(*) AS LINE_COUNT, SUM(i.CALC_TOTAL_PRICE) AS TOTAL_INVOICE_VALUE FROM SA_SALES_INVOICE i LEFT JOIN SC_APPLICATION_USERS u ON u.COMPANY_CODE = i.COMPANY_CODE AND u.LOGIN_CODE = i.CREATED_BY WHERE i.COMPANY_CODE = '01' AND i.BRANCH_CODE = '01.01' AND i.DELETED_FLAG = 'N' GROUP BY i.CREATED_BY, u.LOGIN_EDESC ORDER BY TOTAL_INVOICE_VALUE DESC) WHERE ROWNUM <= 5",
+      "company code": "01",
+      "branch code": "01.01"
+    },
+    {
+      "id": 42,
+      "type": "hard",
+      "query": "Required columns: CUSTOMER_CODE, CUSTOMER_EDESC, AVG_ORDER_VALUE. Find customer with highest average order value in 2025 for branch 01.02.",
+      "true_sql": "SELECT * FROM (SELECT o.CUSTOMER_CODE, cs.CUSTOMER_EDESC, AVG(o.CALC_TOTAL_PRICE) AS AVG_ORDER_VALUE FROM SA_SALES_ORDER o JOIN SA_CUSTOMER_SETUP cs ON cs.COMPANY_CODE = o.COMPANY_CODE AND cs.CUSTOMER_CODE = o.CUSTOMER_CODE WHERE o.COMPANY_CODE = '01' AND o.BRANCH_CODE = '01.02' AND o.DELETED_FLAG = 'N' AND TRUNC(o.ORDER_DATE) >= TO_DATE('2025-01-01', 'YYYY-MM-DD') AND TRUNC(o.ORDER_DATE) < TO_DATE('2026-01-01', 'YYYY-MM-DD') GROUP BY o.CUSTOMER_CODE, cs.CUSTOMER_EDESC ORDER BY AVG_ORDER_VALUE DESC) WHERE ROWNUM <= 1",
+      "company code": "01",
+      "branch code": "01.02"
+    },
+    {
+      "id": 43,
+      "type": "hard",
+      "query": "Required columns: ITEM_CODE, ITEM_EDESC, PART_NUMBER, BRAND_NAME, TOTAL_REVENUE. Show top 10 item-spec combinations by invoice revenue for branch 01.03.",
+      "true_sql": "SELECT * FROM (SELECT i.ITEM_CODE, im.ITEM_EDESC, sp.PART_NUMBER, sp.BRAND_NAME, SUM(i.CALC_TOTAL_PRICE) AS TOTAL_REVENUE FROM SA_SALES_INVOICE i JOIN IP_ITEM_MASTER_SETUP im ON im.COMPANY_CODE = i.COMPANY_CODE AND im.ITEM_CODE = i.ITEM_CODE JOIN IP_ITEM_SPEC_SETUP sp ON sp.COMPANY_CODE = i.COMPANY_CODE AND sp.ITEM_CODE = i.ITEM_CODE WHERE i.COMPANY_CODE = '01' AND i.BRANCH_CODE = '01.03' AND i.DELETED_FLAG = 'N' AND sp.DELETED_FLAG = 'N' GROUP BY i.ITEM_CODE, im.ITEM_EDESC, sp.PART_NUMBER, sp.BRAND_NAME ORDER BY TOTAL_REVENUE DESC) WHERE ROWNUM <= 10",
+      "company code": "01",
+      "branch code": "01.03"
+    },
+    {
+      "id": 44,
+      "type": "hard",
+      "query": "Required columns: RETURN_MONTH, NET_RETURN_VALUE, PREV_MONTH_RETURN_VALUE. Show month-over-month return value trend for 2025 in branch 01.04.",
+      "true_sql": "SELECT t.RETURN_MONTH, t.NET_RETURN_VALUE, LAG(t.NET_RETURN_VALUE) OVER (ORDER BY t.RETURN_MONTH) AS PREV_MONTH_RETURN_VALUE FROM (SELECT TO_CHAR(r.RETURN_DATE, 'YYYY-MM') AS RETURN_MONTH, SUM(r.CALC_TOTAL_PRICE) AS NET_RETURN_VALUE FROM SA_SALES_RETURN r WHERE r.COMPANY_CODE = '01' AND r.BRANCH_CODE = '01.04' AND r.DELETED_FLAG = 'N' AND TRUNC(r.RETURN_DATE) >= TO_DATE('2025-01-01', 'YYYY-MM-DD') AND TRUNC(r.RETURN_DATE) < TO_DATE('2026-01-01', 'YYYY-MM-DD') GROUP BY TO_CHAR(r.RETURN_DATE, 'YYYY-MM')) t ORDER BY t.RETURN_MONTH",
+      "company code": "01",
+      "branch code": "01.04"
+    },
+    {
+      "id": 45,
+      "type": "hard",
+      "query": "Required columns: BRANCH_CODE, CUSTOMER_CODE, ORDER_COUNT. Identify customers with more than 20 invoice lines in branch 01.05.",
+      "true_sql": "SELECT i.BRANCH_CODE, i.CUSTOMER_CODE, COUNT(*) AS ORDER_COUNT FROM SA_SALES_INVOICE i WHERE i.COMPANY_CODE = '01' AND i.BRANCH_CODE = '01.05' AND i.DELETED_FLAG = 'N' GROUP BY i.BRANCH_CODE, i.CUSTOMER_CODE HAVING COUNT(*) > 20 ORDER BY ORDER_COUNT DESC",
+      "company code": "01",
+      "branch code": "01.05"
+    }
+  ]
+}

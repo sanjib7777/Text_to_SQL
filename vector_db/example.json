@@ -1,0 +1,502 @@
+[
+  {
+    "example_id": "SALES_001",
+    "description": "Retrieve all sales invoices created in the last 30 days",
+    "sql_query": "SELECT * FROM SA_SALES_INVOICE WHERE TRUNC(SALES_DATE) >= TO_DATE('2026-07-06', 'YYYY-MM-DD') AND TRUNC(SALES_DATE) < TO_DATE('2026-08-06', 'YYYY-MM-DD') AND DELETED_FLAG = 'N';"
+  },
+  {
+    "example_id": "SALES_002",
+    "description": "Get all invoice line items for a specific invoice number",
+    "sql_query": "SELECT * FROM SA_SALES_INVOICE WHERE SALES_NO = 'INV-2026-0001' AND COMPANY_CODE = 'C001';"
+  },
+  {
+    "example_id": "SALES_003",
+    "description": "List all sales invoices for a specific customer",
+    "sql_query": "SELECT SALES_NO, SALES_DATE, ITEM_CODE, QUANTITY, TOTAL_PRICE FROM SA_SALES_INVOICE WHERE CUSTOMER_CODE = 'CUST0001' AND DELETED_FLAG = 'N' ORDER BY SALES_DATE DESC;"
+  },
+  {
+    "example_id": "SALES_004",
+    "description": "Find all invoices created by a specific employee/salesperson",
+    "sql_query": "SELECT SALES_NO, SALES_DATE, CUSTOMER_CODE, TOTAL_PRICE FROM SA_SALES_INVOICE WHERE EMPLOYEE_CODE = 'EMP0025' AND DELETED_FLAG = 'N';"
+  },
+  {
+    "example_id": "SALES_005",
+    "description": "List all invoices for a specific branch and company",
+    "sql_query": "SELECT SALES_NO, SALES_DATE, CUSTOMER_CODE, TOTAL_PRICE FROM SA_SALES_INVOICE WHERE BRANCH_CODE = 'BR01' AND COMPANY_CODE = 'C001' AND DELETED_FLAG = 'N';"
+  },
+  {
+    "example_id": "SALES_006",
+    "description": "Get all invoices between two given dates",
+    "sql_query": "SELECT SALES_NO, SALES_DATE, CUSTOMER_CODE, TOTAL_PRICE FROM SA_SALES_INVOICE WHERE TRUNC(SALES_DATE) >= TO_DATE('2026-06-01', 'YYYY-MM-DD') AND TRUNC(SALES_DATE) < TO_DATE('2026-07-01', 'YYYY-MM-DD') AND DELETED_FLAG = 'N';"
+  },
+  {
+    "example_id": "SALES_007",
+    "description": "Retrieve invoices with a specific sales type code",
+    "sql_query": "SELECT SALES_NO, SALES_DATE, CUSTOMER_CODE, TOTAL_PRICE FROM SA_SALES_INVOICE WHERE SALES_TYPE_CODE = 'CASH' AND DELETED_FLAG = 'N';"
+  },
+  {
+    "example_id": "SALES_008",
+    "description": "Find invoices with credit days greater than 30",
+    "sql_query": "SELECT SALES_NO, CUSTOMER_CODE, CREDIT_DAYS, TOTAL_PRICE FROM SA_SALES_INVOICE WHERE CREDIT_DAYS > 30 AND DELETED_FLAG = 'N';"
+  },
+  {
+    "example_id": "SALES_009",
+    "description": "List invoices paid via a specific payment mode",
+    "sql_query": "SELECT SALES_NO, SALES_DATE, CUSTOMER_CODE, PAYMENT_MODE, TOTAL_PRICE FROM SA_SALES_INVOICE WHERE PAYMENT_MODE = 'BANK_TRANSFER' AND DELETED_FLAG = 'N';"
+  },
+  {
+    "example_id": "SALES_010",
+    "description": "Retrieve invoices where free quantity was given",
+    "sql_query": "SELECT SALES_NO, ITEM_CODE, QUANTITY, FREE_QTY FROM SA_SALES_INVOICE WHERE FREE_QTY > 0 AND DELETED_FLAG = 'N';"
+  },
+  {
+    "example_id": "SALES_011",
+    "description": "Get total sales value for the previous month",
+    "sql_query": "SELECT SUM(TOTAL_PRICE) AS TOTAL_SALES\nFROM SA_SALES_INVOICE\nWHERE TRUNC(SALES_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n  AND TRUNC(SALES_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n  AND DELETED_FLAG = 'N';"
+  },
+  {
+    "example_id": "SALES_012",
+    "description": "Get total sales value for the current month",
+    "sql_query": "SELECT SUM(TOTAL_PRICE) AS TOTAL_SALES\nFROM SA_SALES_INVOICE\nWHERE TRUNC(SALES_DATE) >= TO_DATE('2026-08-01', 'YYYY-MM-DD')\n  AND TRUNC(SALES_DATE) < TO_DATE('2026-09-01', 'YYYY-MM-DD')\n  AND DELETED_FLAG = 'N';"
+  },
+  {
+    "example_id": "SALES_013",
+    "description": "Get total quantity sold last month",
+    "sql_query": "SELECT SUM(QUANTITY) AS TOTAL_QUANTITY\nFROM SA_SALES_INVOICE\nWHERE TRUNC(SALES_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n  AND TRUNC(SALES_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n  AND DELETED_FLAG = 'N';"
+  },
+  {
+    "example_id": "SALES_014",
+    "description": "Get total number of invoices generated last month",
+    "sql_query": "SELECT COUNT(DISTINCT SALES_NO) AS INVOICE_COUNT\nFROM SA_SALES_INVOICE\nWHERE TRUNC(SALES_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n  AND TRUNC(SALES_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n  AND DELETED_FLAG = 'N';"
+  },
+  {
+    "example_id": "SALES_015",
+    "description": "Get average invoice value for the last 90 days",
+    "sql_query": "SELECT AVG(TOTAL_PRICE) AS AVG_INVOICE_VALUE\nFROM SA_SALES_INVOICE\nWHERE TRUNC(SALES_DATE) >= TO_DATE('2026-05-07', 'YYYY-MM-DD')\n  AND TRUNC(SALES_DATE) < TO_DATE('2026-08-06', 'YYYY-MM-DD')\n  AND DELETED_FLAG = 'N';"
+  },
+  {
+    "example_id": "SALES_016",
+    "description": "Get total sales value grouped by branch for the previous month",
+    "sql_query": "SELECT BRANCH_CODE, SUM(TOTAL_PRICE) AS TOTAL_SALES\nFROM SA_SALES_INVOICE\nWHERE TRUNC(SALES_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n  AND TRUNC(SALES_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n  AND DELETED_FLAG = 'N'\nGROUP BY BRANCH_CODE\nORDER BY TOTAL_SALES DESC;"
+  },
+  {
+    "example_id": "SALES_017",
+    "description": "Get total sales value grouped by division for the previous month",
+    "sql_query": "SELECT DIVISION_CODE, SUM(TOTAL_PRICE) AS TOTAL_SALES\nFROM SA_SALES_INVOICE\nWHERE TRUNC(SALES_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n  AND TRUNC(SALES_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n  AND DELETED_FLAG = 'N'\nGROUP BY DIVISION_CODE\nORDER BY TOTAL_SALES DESC;"
+  },
+  {
+    "example_id": "SALES_018",
+    "description": "Get total sales value grouped by customer for the previous month",
+    "sql_query": "SELECT CUSTOMER_CODE, SUM(TOTAL_PRICE) AS TOTAL_SALES\nFROM SA_SALES_INVOICE\nWHERE TRUNC(SALES_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n  AND TRUNC(SALES_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n  AND DELETED_FLAG = 'N'\nGROUP BY CUSTOMER_CODE\nORDER BY TOTAL_SALES DESC;"
+  },
+  {
+    "example_id": "SALES_019",
+    "description": "Get total sales value grouped by item for the previous month",
+    "sql_query": "SELECT ITEM_CODE, SUM(QUANTITY) AS TOTAL_QTY, SUM(TOTAL_PRICE) AS TOTAL_SALES\nFROM SA_SALES_INVOICE\nWHERE TRUNC(SALES_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n  AND TRUNC(SALES_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n  AND DELETED_FLAG = 'N'\nGROUP BY ITEM_CODE\nORDER BY TOTAL_SALES DESC;"
+  },
+  {
+    "example_id": "SALES_020",
+    "description": "Get total sales value grouped by employee/salesperson for the previous month",
+    "sql_query": "SELECT EMPLOYEE_CODE, SUM(TOTAL_PRICE) AS TOTAL_SALES\nFROM SA_SALES_INVOICE\nWHERE TRUNC(SALES_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n  AND TRUNC(SALES_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n  AND DELETED_FLAG = 'N'\nGROUP BY EMPLOYEE_CODE\nORDER BY TOTAL_SALES DESC;"
+  },
+  {
+    "example_id": "SALES_021",
+    "description": "Get total sales value grouped by sales type (cash/credit) for the previous month",
+    "sql_query": "SELECT SALES_TYPE_CODE, SUM(TOTAL_PRICE) AS TOTAL_SALES\nFROM SA_SALES_INVOICE\nWHERE TRUNC(SALES_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n  AND TRUNC(SALES_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n  AND DELETED_FLAG = 'N'\nGROUP BY SALES_TYPE_CODE\nORDER BY TOTAL_SALES DESC;"
+  },
+  {
+    "example_id": "SALES_022",
+    "description": "Get daily sales totals for the previous month",
+    "sql_query": "SELECT TRUNC(SALES_DATE) AS SALES_DAY, SUM(TOTAL_PRICE) AS TOTAL_SALES\nFROM SA_SALES_INVOICE\nWHERE TRUNC(SALES_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n  AND TRUNC(SALES_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n  AND DELETED_FLAG = 'N'\nGROUP BY TRUNC(SALES_DATE)\nORDER BY SALES_DAY;"
+  },
+  {
+    "example_id": "SALES_023",
+    "description": "Get total sales value grouped by currency code",
+    "sql_query": "SELECT CURRENCY_CODE, SUM(TOTAL_PRICE) AS TOTAL_SALES\nFROM SA_SALES_INVOICE\nWHERE DELETED_FLAG = 'N'\nGROUP BY CURRENCY_CODE;"
+  },
+  {
+    "example_id": "SALES_024",
+    "description": "Count number of invoices per branch for the previous month",
+    "sql_query": "SELECT BRANCH_CODE, COUNT(DISTINCT SALES_NO) AS INVOICE_COUNT\nFROM SA_SALES_INVOICE\nWHERE TRUNC(SALES_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n  AND TRUNC(SALES_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n  AND DELETED_FLAG = 'N'\nGROUP BY BRANCH_CODE\nORDER BY INVOICE_COUNT DESC;"
+  },
+  {
+    "example_id": "SALES_025",
+    "description": "Get total luxury tax and excise duty collected last month",
+    "sql_query": "SELECT SUM(LUXURY_TAX_AMOUNT) AS TOTAL_LUXURY_TAX, SUM(EXCISE_DUTY_AMOUNT) AS TOTAL_EXCISE_DUTY\nFROM SA_SALES_INVOICE\nWHERE TRUNC(SALES_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n  AND TRUNC(SALES_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n  AND DELETED_FLAG = 'N';"
+  },
+  {
+    "example_id": "SALES_026",
+    "description": "Compare total sales of current month vs previous month",
+    "sql_query": "SELECT\n  SUM(CASE WHEN TRUNC(SALES_DATE) >= TO_DATE('2026-08-01','YYYY-MM-DD') AND TRUNC(SALES_DATE) < TO_DATE('2026-09-01','YYYY-MM-DD') THEN TOTAL_PRICE ELSE 0 END) AS CURRENT_MONTH_SALES,\n  SUM(CASE WHEN TRUNC(SALES_DATE) >= TO_DATE('2026-07-01','YYYY-MM-DD') AND TRUNC(SALES_DATE) < TO_DATE('2026-08-01','YYYY-MM-DD') THEN TOTAL_PRICE ELSE 0 END) AS PREVIOUS_MONTH_SALES\nFROM SA_SALES_INVOICE\nWHERE DELETED_FLAG = 'N'\n  AND SALES_DATE >= TO_DATE('2026-07-01','YYYY-MM-DD')\n  AND SALES_DATE < TO_DATE('2026-09-01','YYYY-MM-DD');"
+  },
+  {
+    "example_id": "SALES_027",
+    "description": "Get month-wise sales trend for the last 12 months",
+    "sql_query": "SELECT TO_CHAR(SALES_DATE, 'YYYY-MM') AS SALES_MONTH, SUM(TOTAL_PRICE) AS TOTAL_SALES\nFROM SA_SALES_INVOICE\nWHERE TRUNC(SALES_DATE) >= TO_DATE('2025-08-01', 'YYYY-MM-DD')\n  AND TRUNC(SALES_DATE) < TO_DATE('2026-08-06', 'YYYY-MM-DD')\n  AND DELETED_FLAG = 'N'\nGROUP BY TO_CHAR(SALES_DATE, 'YYYY-MM')\nORDER BY SALES_MONTH;"
+  },
+  {
+    "example_id": "SALES_028",
+    "description": "Calculate month-over-month sales growth percentage",
+    "sql_query": "SELECT SALES_MONTH,\n       TOTAL_SALES,\n       ROUND((TOTAL_SALES - LAG(TOTAL_SALES) OVER (ORDER BY SALES_MONTH))\n             / LAG(TOTAL_SALES) OVER (ORDER BY SALES_MONTH) * 100, 2) AS MOM_GROWTH_PCT\nFROM (\n  SELECT TO_CHAR(SALES_DATE, 'YYYY-MM') AS SALES_MONTH, SUM(TOTAL_PRICE) AS TOTAL_SALES\n  FROM SA_SALES_INVOICE\n  WHERE TRUNC(SALES_DATE) >= TO_DATE('2025-08-01', 'YYYY-MM-DD')\n    AND TRUNC(SALES_DATE) < TO_DATE('2026-08-06', 'YYYY-MM-DD')\n    AND DELETED_FLAG = 'N'\n  GROUP BY TO_CHAR(SALES_DATE, 'YYYY-MM')\n)\nORDER BY SALES_MONTH;"
+  },
+  {
+    "example_id": "SALES_029",
+    "description": "Get year-over-year sales comparison for the same month",
+    "sql_query": "SELECT\n  SUM(CASE WHEN TRUNC(SALES_DATE) >= TO_DATE('2026-07-01','YYYY-MM-DD') AND TRUNC(SALES_DATE) < TO_DATE('2026-08-01','YYYY-MM-DD') THEN TOTAL_PRICE ELSE 0 END) AS THIS_YEAR_SALES,\n  SUM(CASE WHEN TRUNC(SALES_DATE) >= TO_DATE('2025-07-01','YYYY-MM-DD') AND TRUNC(SALES_DATE) < TO_DATE('2025-08-01','YYYY-MM-DD') THEN TOTAL_PRICE ELSE 0 END) AS LAST_YEAR_SALES\nFROM SA_SALES_INVOICE\nWHERE DELETED_FLAG = 'N'\n  AND SALES_DATE >= TO_DATE('2025-07-01','YYYY-MM-DD')\n  AND SALES_DATE < TO_DATE('2026-08-01','YYYY-MM-DD');"
+  },
+  {
+    "example_id": "SALES_030",
+    "description": "Get quarterly sales totals for the current fiscal year",
+    "sql_query": "SELECT TO_CHAR(SALES_DATE, 'YYYY') AS SALES_YEAR, TO_CHAR(SALES_DATE, 'Q') AS QUARTER, SUM(TOTAL_PRICE) AS TOTAL_SALES\nFROM SA_SALES_INVOICE\nWHERE TRUNC(SALES_DATE) >= TO_DATE('2026-01-01', 'YYYY-MM-DD')\n  AND TRUNC(SALES_DATE) < TO_DATE('2027-01-01', 'YYYY-MM-DD')\n  AND DELETED_FLAG = 'N'\nGROUP BY TO_CHAR(SALES_DATE, 'YYYY'), TO_CHAR(SALES_DATE, 'Q')\nORDER BY SALES_YEAR, QUARTER;"
+  },
+  {
+    "example_id": "SALES_031",
+    "description": "Get weekly sales totals for the last 8 weeks",
+    "sql_query": "SELECT TRUNC(SALES_DATE, 'IW') AS WEEK_START, SUM(TOTAL_PRICE) AS TOTAL_SALES\nFROM SA_SALES_INVOICE\nWHERE TRUNC(SALES_DATE) >= TO_DATE('2026-06-10', 'YYYY-MM-DD')\n  AND TRUNC(SALES_DATE) < TO_DATE('2026-08-06', 'YYYY-MM-DD')\n  AND DELETED_FLAG = 'N'\nGROUP BY TRUNC(SALES_DATE, 'IW')\nORDER BY WEEK_START;"
+  },
+  {
+    "example_id": "SALES_032",
+    "description": "Identify the best sales month in the last 12 months and give 1 row only",
+    "sql_query": "SELECT * FROM (\n  SELECT TO_CHAR(SALES_DATE, 'YYYY-MM') AS SALES_MONTH, SUM(TOTAL_PRICE) AS TOTAL_SALES\n  FROM SA_SALES_INVOICE\n  WHERE TRUNC(SALES_DATE) >= TO_DATE('2025-08-01', 'YYYY-MM-DD')\n    AND TRUNC(SALES_DATE) < TO_DATE('2026-08-06', 'YYYY-MM-DD')\n    AND DELETED_FLAG = 'N'\n  GROUP BY TO_CHAR(SALES_DATE, 'YYYY-MM')\n  ORDER BY TOTAL_SALES DESC\n) WHERE ROWNUM = 1;"
+  },
+  {
+    "example_id": "SALES_033",
+    "description": "Get running cumulative sales total for the current year",
+    "sql_query": "SELECT SALES_MONTH, TOTAL_SALES,\n       SUM(TOTAL_SALES) OVER (ORDER BY SALES_MONTH) AS CUMULATIVE_SALES\nFROM (\n  SELECT TO_CHAR(SALES_DATE, 'YYYY-MM') AS SALES_MONTH, SUM(TOTAL_PRICE) AS TOTAL_SALES\n  FROM SA_SALES_INVOICE\n  WHERE TRUNC(SALES_DATE) >= TO_DATE('2026-01-01', 'YYYY-MM-DD')\n    AND TRUNC(SALES_DATE) < TO_DATE('2027-01-01', 'YYYY-MM-DD')\n    AND DELETED_FLAG = 'N'\n  GROUP BY TO_CHAR(SALES_DATE, 'YYYY-MM')\n)\nORDER BY SALES_MONTH;"
+  },
+  {
+    "example_id": "SALES_034",
+    "description": "Get average daily sales value for the previous month",
+    "sql_query": "SELECT SUM(TOTAL_PRICE) / COUNT(DISTINCT TRUNC(SALES_DATE)) AS AVG_DAILY_SALES\nFROM SA_SALES_INVOICE\nWHERE TRUNC(SALES_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n  AND TRUNC(SALES_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n  AND DELETED_FLAG = 'N';"
+  },
+  {
+    "example_id": "SALES_035",
+    "description": "Compare sales of last month to the same month last year",
+    "sql_query": "SELECT\n  SUM(CASE WHEN TRUNC(SALES_DATE) >= TO_DATE('2026-07-01','YYYY-MM-DD') AND TRUNC(SALES_DATE) < TO_DATE('2026-08-01','YYYY-MM-DD') THEN TOTAL_PRICE ELSE 0 END) AS LAST_MONTH_SALES,\n  SUM(CASE WHEN TRUNC(SALES_DATE) >= TO_DATE('2025-07-01','YYYY-MM-DD') AND TRUNC(SALES_DATE) < TO_DATE('2025-08-01','YYYY-MM-DD') THEN TOTAL_PRICE ELSE 0 END) AS SAME_MONTH_LAST_YEAR_SALES\nFROM SA_SALES_INVOICE\nWHERE DELETED_FLAG = 'N'\n  AND ((SALES_DATE >= TO_DATE('2026-07-01','YYYY-MM-DD') AND SALES_DATE < TO_DATE('2026-08-01','YYYY-MM-DD'))\n    OR (SALES_DATE >= TO_DATE('2025-07-01','YYYY-MM-DD') AND SALES_DATE < TO_DATE('2025-08-01','YYYY-MM-DD')));"
+  },
+  {
+    "example_id": "SALES_036",
+    "description": "Get top 10 customers by sales value in the previous month and give 10 row only",
+    "sql_query": "SELECT * FROM (\n  SELECT CUSTOMER_CODE, SUM(TOTAL_PRICE) AS TOTAL_SALES\n  FROM SA_SALES_INVOICE\n  WHERE TRUNC(SALES_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n    AND TRUNC(SALES_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n    AND DELETED_FLAG = 'N'\n  GROUP BY CUSTOMER_CODE\n  ORDER BY TOTAL_SALES DESC\n) WHERE ROWNUM <= 10;"
+  },
+  {
+    "example_id": "SALES_037",
+    "description": "Get top 10 best-selling items by quantity in the previous month and give 10 row only",
+    "sql_query": "SELECT * FROM (\n  SELECT ITEM_CODE, SUM(QUANTITY) AS TOTAL_QTY\n  FROM SA_SALES_INVOICE\n  WHERE TRUNC(SALES_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n    AND TRUNC(SALES_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n    AND DELETED_FLAG = 'N'\n  GROUP BY ITEM_CODE\n  ORDER BY TOTAL_QTY DESC\n) WHERE ROWNUM <= 10;"
+  },
+  {
+    "example_id": "SALES_038",
+    "description": "Get top 5 branches by sales revenue in the previous month and give 5 row only",
+    "sql_query": "SELECT * FROM (\n  SELECT BRANCH_CODE, SUM(TOTAL_PRICE) AS TOTAL_SALES\n  FROM SA_SALES_INVOICE\n  WHERE TRUNC(SALES_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n    AND TRUNC(SALES_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n    AND DELETED_FLAG = 'N'\n  GROUP BY BRANCH_CODE\n  ORDER BY TOTAL_SALES DESC\n) WHERE ROWNUM <= 5;"
+  },
+  {
+    "example_id": "SALES_039",
+    "description": "Get top 5 salespersons by total sales value in the previous month and give 5 row only",
+    "sql_query": "SELECT * FROM (\n  SELECT EMPLOYEE_CODE, SUM(TOTAL_PRICE) AS TOTAL_SALES\n  FROM SA_SALES_INVOICE\n  WHERE TRUNC(SALES_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n    AND TRUNC(SALES_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n    AND DELETED_FLAG = 'N'\n  GROUP BY EMPLOYEE_CODE\n  ORDER BY TOTAL_SALES DESC\n) WHERE ROWNUM <= 5;"
+  },
+  {
+    "example_id": "SALES_040",
+    "description": "Find the least performing branch by sales value in the previous month and give 1 row only",
+    "sql_query": "SELECT * FROM (\n  SELECT BRANCH_CODE, SUM(TOTAL_PRICE) AS TOTAL_SALES\n  FROM SA_SALES_INVOICE\n  WHERE TRUNC(SALES_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n    AND TRUNC(SALES_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n    AND DELETED_FLAG = 'N'\n  GROUP BY BRANCH_CODE\n  ORDER BY TOTAL_SALES ASC\n) WHERE ROWNUM = 1;"
+  },
+  {
+    "example_id": "SALES_041",
+    "description": "Rank customers by total purchase value in the current year",
+    "sql_query": "SELECT CUSTOMER_CODE, TOTAL_SALES,\n       RANK() OVER (ORDER BY TOTAL_SALES DESC) AS SALES_RANK\nFROM (\n  SELECT CUSTOMER_CODE, SUM(TOTAL_PRICE) AS TOTAL_SALES\n  FROM SA_SALES_INVOICE\n  WHERE TRUNC(SALES_DATE) >= TO_DATE('2026-01-01', 'YYYY-MM-DD')\n    AND TRUNC(SALES_DATE) < TO_DATE('2027-01-01', 'YYYY-MM-DD')\n    AND DELETED_FLAG = 'N'\n  GROUP BY CUSTOMER_CODE\n);"
+  },
+  {
+    "example_id": "SALES_042",
+    "description": "Get top 10 items by total revenue for the current year and give 10 row only",
+    "sql_query": "SELECT * FROM (\n  SELECT ITEM_CODE, SUM(TOTAL_PRICE) AS TOTAL_SALES\n  FROM SA_SALES_INVOICE\n  WHERE TRUNC(SALES_DATE) >= TO_DATE('2026-01-01', 'YYYY-MM-DD')\n    AND TRUNC(SALES_DATE) < TO_DATE('2027-01-01', 'YYYY-MM-DD')\n    AND DELETED_FLAG = 'N'\n  GROUP BY ITEM_CODE\n  ORDER BY TOTAL_SALES DESC\n) WHERE ROWNUM <= 10;"
+  },
+  {
+    "example_id": "SALES_043",
+    "description": "Find customers who purchased only once in the last 6 months",
+    "sql_query": "SELECT CUSTOMER_CODE, COUNT(DISTINCT SALES_NO) AS INVOICE_COUNT\nFROM SA_SALES_INVOICE\nWHERE TRUNC(SALES_DATE) >= TO_DATE('2026-02-05', 'YYYY-MM-DD')\n  AND TRUNC(SALES_DATE) < TO_DATE('2026-08-06', 'YYYY-MM-DD')\n  AND DELETED_FLAG = 'N'\nGROUP BY CUSTOMER_CODE\nHAVING COUNT(DISTINCT SALES_NO) = 1;"
+  },
+  {
+    "example_id": "SALES_044",
+    "description": "Find customers with the highest average order value",
+    "sql_query": "SELECT * FROM (\n  SELECT CUSTOMER_CODE, AVG(TOTAL_PRICE) AS AVG_ORDER_VALUE\n  FROM SA_SALES_INVOICE\n  WHERE DELETED_FLAG = 'N'\n  GROUP BY CUSTOMER_CODE\n  ORDER BY AVG_ORDER_VALUE DESC\n) WHERE ROWNUM <= 10;"
+  },
+  {
+    "example_id": "SALES_045",
+    "description": "Get top 3 sales types by revenue contribution in the previous month and give 3 row only",
+    "sql_query": "SELECT * FROM (\n  SELECT SALES_TYPE_CODE, SUM(TOTAL_PRICE) AS TOTAL_SALES\n  FROM SA_SALES_INVOICE\n  WHERE TRUNC(SALES_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n    AND TRUNC(SALES_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n    AND DELETED_FLAG = 'N'\n  GROUP BY SALES_TYPE_CODE\n  ORDER BY TOTAL_SALES DESC\n) WHERE ROWNUM <= 3;"
+  },
+  {
+    "example_id": "SALES_046",
+    "description": "Get item-wise sales report with item description for the previous month",
+    "sql_query": "SELECT i.ITEM_CODE, im.ITEM_EDESC, SUM(i.QUANTITY) AS TOTAL_QTY, SUM(i.TOTAL_PRICE) AS TOTAL_SALES\nFROM SA_SALES_INVOICE i\nJOIN IP_ITEM_MASTER_SETUP im\n  ON i.ITEM_CODE = im.ITEM_CODE AND i.COMPANY_CODE = im.COMPANY_CODE\nWHERE TRUNC(i.SALES_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n  AND TRUNC(i.SALES_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n  AND i.DELETED_FLAG = 'N'\nGROUP BY i.ITEM_CODE, im.ITEM_EDESC\nORDER BY TOTAL_SALES DESC;"
+  },
+  {
+    "example_id": "SALES_047",
+    "description": "Get category-wise sales report for the previous month",
+    "sql_query": "SELECT c.CATEGORY_CODE, c.CATEGORY_EDESC, SUM(i.TOTAL_PRICE) AS TOTAL_SALES\nFROM SA_SALES_INVOICE i\nJOIN IP_ITEM_MASTER_SETUP im\n  ON i.ITEM_CODE = im.ITEM_CODE AND i.COMPANY_CODE = im.COMPANY_CODE\nJOIN IP_CATEGORY_CODE c\n  ON im.CATEGORY_CODE = c.CATEGORY_CODE AND im.COMPANY_CODE = c.COMPANY_CODE\nWHERE TRUNC(i.SALES_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n  AND TRUNC(i.SALES_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n  AND i.DELETED_FLAG = 'N'\nGROUP BY c.CATEGORY_CODE, c.CATEGORY_EDESC\nORDER BY TOTAL_SALES DESC;"
+  },
+  {
+    "example_id": "SALES_048",
+    "description": "Get top 10 best-selling items with their category description and give 10 row only",
+    "sql_query": "SELECT * FROM (\n  SELECT im.ITEM_CODE, im.ITEM_EDESC, c.CATEGORY_EDESC, SUM(i.TOTAL_PRICE) AS TOTAL_SALES\n  FROM SA_SALES_INVOICE i\n  JOIN IP_ITEM_MASTER_SETUP im ON i.ITEM_CODE = im.ITEM_CODE AND i.COMPANY_CODE = im.COMPANY_CODE\n  JOIN IP_CATEGORY_CODE c ON im.CATEGORY_CODE = c.CATEGORY_CODE AND im.COMPANY_CODE = c.COMPANY_CODE\n  WHERE i.DELETED_FLAG = 'N'\n  GROUP BY im.ITEM_CODE, im.ITEM_EDESC, c.CATEGORY_EDESC\n  ORDER BY TOTAL_SALES DESC\n) WHERE ROWNUM <= 10;"
+  },
+  {
+    "example_id": "SALES_049",
+    "description": "Get sales report for a specific product category in the previous month",
+    "sql_query": "SELECT im.ITEM_CODE, im.ITEM_EDESC, SUM(i.QUANTITY) AS TOTAL_QTY, SUM(i.TOTAL_PRICE) AS TOTAL_SALES\nFROM SA_SALES_INVOICE i\nJOIN IP_ITEM_MASTER_SETUP im ON i.ITEM_CODE = im.ITEM_CODE AND i.COMPANY_CODE = im.COMPANY_CODE\nWHERE im.CATEGORY_CODE = 'BV'\n  AND TRUNC(i.SALES_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n  AND TRUNC(i.SALES_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n  AND i.DELETED_FLAG = 'N'\nGROUP BY im.ITEM_CODE, im.ITEM_EDESC\nORDER BY TOTAL_SALES DESC;"
+  },
+  {
+    "example_id": "SALES_050",
+    "description": "Get sales report grouped by brand name for the previous month",
+    "sql_query": "SELECT s.BRAND_NAME, SUM(i.TOTAL_PRICE) AS TOTAL_SALES\nFROM SA_SALES_INVOICE i\nJOIN IP_ITEM_SPEC_SETUP s ON i.ITEM_CODE = s.ITEM_CODE AND i.COMPANY_CODE = s.COMPANY_CODE\nWHERE TRUNC(i.SALES_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n  AND TRUNC(i.SALES_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n  AND i.DELETED_FLAG = 'N'\nGROUP BY s.BRAND_NAME\nORDER BY TOTAL_SALES DESC;"
+  },
+  {
+    "example_id": "SALES_051",
+    "description": "Find items sold below their standard rate in the previous month",
+    "sql_query": "SELECT i.ITEM_CODE, im.ITEM_EDESC, i.UNIT_PRICE, im.STD_RATE\nFROM SA_SALES_INVOICE i\nJOIN IP_ITEM_MASTER_SETUP im ON i.ITEM_CODE = im.ITEM_CODE AND i.COMPANY_CODE = im.COMPANY_CODE\nWHERE i.UNIT_PRICE < im.STD_RATE\n  AND TRUNC(i.SALES_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n  AND TRUNC(i.SALES_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n  AND i.DELETED_FLAG = 'N';"
+  },
+  {
+    "example_id": "SALES_052",
+    "description": "Get sales report with item shelf life for perishable/expiring items",
+    "sql_query": "SELECT i.ITEM_CODE, im.ITEM_EDESC, im.SHELF_LIFE_DAYS, SUM(i.QUANTITY) AS TOTAL_QTY\nFROM SA_SALES_INVOICE i\nJOIN IP_ITEM_MASTER_SETUP im ON i.ITEM_CODE = im.ITEM_CODE AND i.COMPANY_CODE = im.COMPANY_CODE\nWHERE im.SHELF_LIFE_DAYS IS NOT NULL\n  AND i.DELETED_FLAG = 'N'\nGROUP BY i.ITEM_CODE, im.ITEM_EDESC, im.SHELF_LIFE_DAYS\nORDER BY im.SHELF_LIFE_DAYS ASC;"
+  },
+  {
+    "example_id": "SALES_053",
+    "description": "Get total sales value and gross profit estimate using purchase price vs sales price",
+    "sql_query": "SELECT i.ITEM_CODE, im.ITEM_EDESC,\n       SUM(i.QUANTITY) AS TOTAL_QTY,\n       SUM(i.TOTAL_PRICE) AS TOTAL_SALES,\n       SUM(i.QUANTITY * im.PURCHASE_PRICE) AS ESTIMATED_COST,\n       SUM(i.TOTAL_PRICE) - SUM(i.QUANTITY * im.PURCHASE_PRICE) AS ESTIMATED_GROSS_PROFIT\nFROM SA_SALES_INVOICE i\nJOIN IP_ITEM_MASTER_SETUP im ON i.ITEM_CODE = im.ITEM_CODE AND i.COMPANY_CODE = im.COMPANY_CODE\nWHERE TRUNC(i.SALES_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n  AND TRUNC(i.SALES_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n  AND i.DELETED_FLAG = 'N'\nGROUP BY i.ITEM_CODE, im.ITEM_EDESC\nORDER BY ESTIMATED_GROSS_PROFIT DESC;"
+  },
+  {
+    "example_id": "SALES_054",
+    "description": "List all active (non-deleted) product categories used in sales",
+    "sql_query": "SELECT DISTINCT c.CATEGORY_CODE, c.CATEGORY_EDESC\nFROM SA_SALES_INVOICE i\nJOIN IP_ITEM_MASTER_SETUP im ON i.ITEM_CODE = im.ITEM_CODE AND i.COMPANY_CODE = im.COMPANY_CODE\nJOIN IP_CATEGORY_CODE c ON im.CATEGORY_CODE = c.CATEGORY_CODE AND im.COMPANY_CODE = c.COMPANY_CODE\nWHERE i.DELETED_FLAG = 'N' AND c.DELETED_FLAG = 'N';"
+  },
+  {
+    "example_id": "SALES_055",
+    "description": "Get sales report for items belonging to a specific brand and color",
+    "sql_query": "SELECT s.ITEM_CODE, s.BRAND_NAME, s.COLOR, SUM(i.QUANTITY) AS TOTAL_QTY, SUM(i.TOTAL_PRICE) AS TOTAL_SALES\nFROM SA_SALES_INVOICE i\nJOIN IP_ITEM_SPEC_SETUP s ON i.ITEM_CODE = s.ITEM_CODE AND i.COMPANY_CODE = s.COMPANY_CODE\nWHERE s.BRAND_NAME = 'BrandX' AND s.COLOR = 'Red'\n  AND i.DELETED_FLAG = 'N'\nGROUP BY s.ITEM_CODE, s.BRAND_NAME, s.COLOR;"
+  },
+  {
+    "example_id": "SALES_056",
+    "description": "Find items sold that are below their reorder level after last month's sales",
+    "sql_query": "SELECT im.ITEM_CODE, im.ITEM_EDESC, im.CURRENT_STOCK, im.REORDER_LEVEL\nFROM IP_ITEM_MASTER_SETUP im\nWHERE im.CURRENT_STOCK < im.REORDER_LEVEL\n  AND im.DELETED_FLAG = 'N'\n  AND EXISTS (\n    SELECT 1 FROM SA_SALES_INVOICE i\n    WHERE i.ITEM_CODE = im.ITEM_CODE AND i.COMPANY_CODE = im.COMPANY_CODE\n      AND TRUNC(i.SALES_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n      AND TRUNC(i.SALES_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n      AND i.DELETED_FLAG = 'N'\n  );"
+  },
+  {
+    "example_id": "SALES_057",
+    "description": "Get category-wise contribution percentage to total sales for the previous month",
+    "sql_query": "SELECT c.CATEGORY_EDESC,\n       SUM(i.TOTAL_PRICE) AS CATEGORY_SALES,\n       ROUND(SUM(i.TOTAL_PRICE) * 100 / SUM(SUM(i.TOTAL_PRICE)) OVER (), 2) AS PCT_OF_TOTAL\nFROM SA_SALES_INVOICE i\nJOIN IP_ITEM_MASTER_SETUP im ON i.ITEM_CODE = im.ITEM_CODE AND i.COMPANY_CODE = im.COMPANY_CODE\nJOIN IP_CATEGORY_CODE c ON im.CATEGORY_CODE = c.CATEGORY_CODE AND im.COMPANY_CODE = c.COMPANY_CODE\nWHERE TRUNC(i.SALES_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n  AND TRUNC(i.SALES_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n  AND i.DELETED_FLAG = 'N'\nGROUP BY c.CATEGORY_EDESC;"
+  },
+  {
+    "example_id": "SALES_058",
+    "description": "Get list of items sold that have no assigned brand specification",
+    "sql_query": "SELECT DISTINCT i.ITEM_CODE\nFROM SA_SALES_INVOICE i\nLEFT JOIN IP_ITEM_SPEC_SETUP s ON i.ITEM_CODE = s.ITEM_CODE AND i.COMPANY_CODE = s.COMPANY_CODE\nWHERE s.ITEM_CODE IS NULL\n  AND i.DELETED_FLAG = 'N';"
+  },
+  {
+    "example_id": "SALES_059",
+    "description": "Get sales report for a specific HS Code (used for export/customs reporting)",
+    "sql_query": "SELECT im.HS_CODE, im.ITEM_CODE, im.ITEM_EDESC, SUM(i.QUANTITY) AS TOTAL_QTY, SUM(i.TOTAL_PRICE) AS TOTAL_SALES\nFROM SA_SALES_INVOICE i\nJOIN IP_ITEM_MASTER_SETUP im ON i.ITEM_CODE = im.ITEM_CODE AND i.COMPANY_CODE = im.COMPANY_CODE\nWHERE im.HS_CODE = '1901.90'\n  AND i.DELETED_FLAG = 'N'\nGROUP BY im.HS_CODE, im.ITEM_CODE, im.ITEM_EDESC;"
+  },
+  {
+    "example_id": "SALES_060",
+    "description": "List items sold with their unit of measure and average selling rate",
+    "sql_query": "SELECT i.ITEM_CODE, im.ITEM_EDESC, i.MU_CODE, AVG(i.UNIT_PRICE) AS AVG_SELLING_RATE\nFROM SA_SALES_INVOICE i\nJOIN IP_ITEM_MASTER_SETUP im ON i.ITEM_CODE = im.ITEM_CODE AND i.COMPANY_CODE = im.COMPANY_CODE\nWHERE i.DELETED_FLAG = 'N'\nGROUP BY i.ITEM_CODE, im.ITEM_EDESC, i.MU_CODE;"
+  },
+  {
+    "example_id": "SALES_061",
+    "description": "Get sales report for service items (non-physical goods)",
+    "sql_query": "SELECT i.ITEM_CODE, im.ITEM_EDESC, SUM(i.TOTAL_PRICE) AS TOTAL_SALES\nFROM SA_SALES_INVOICE i\nJOIN IP_ITEM_MASTER_SETUP im ON i.ITEM_CODE = im.ITEM_CODE AND i.COMPANY_CODE = im.COMPANY_CODE\nWHERE im.SERVICE_ITEM_FLAG = 'Y'\n  AND i.DELETED_FLAG = 'N'\nGROUP BY i.ITEM_CODE, im.ITEM_EDESC;"
+  },
+  {
+    "example_id": "SALES_062",
+    "description": "Get sales report of items grouped by their preferred supplier",
+    "sql_query": "SELECT im.PREFERRED_SUPPLIER_CODE, SUM(i.TOTAL_PRICE) AS TOTAL_SALES\nFROM SA_SALES_INVOICE i\nJOIN IP_ITEM_MASTER_SETUP im ON i.ITEM_CODE = im.ITEM_CODE AND i.COMPANY_CODE = im.COMPANY_CODE\nWHERE i.DELETED_FLAG = 'N'\nGROUP BY im.PREFERRED_SUPPLIER_CODE\nORDER BY TOTAL_SALES DESC;"
+  },
+  {
+    "example_id": "SALES_063",
+    "description": "Find fast-moving items: items sold more than 1000 units in the previous month",
+    "sql_query": "SELECT i.ITEM_CODE, im.ITEM_EDESC, SUM(i.QUANTITY) AS TOTAL_QTY\nFROM SA_SALES_INVOICE i\nJOIN IP_ITEM_MASTER_SETUP im ON i.ITEM_CODE = im.ITEM_CODE AND i.COMPANY_CODE = im.COMPANY_CODE\nWHERE TRUNC(i.SALES_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n  AND TRUNC(i.SALES_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n  AND i.DELETED_FLAG = 'N'\nGROUP BY i.ITEM_CODE, im.ITEM_EDESC\nHAVING SUM(i.QUANTITY) > 1000\nORDER BY TOTAL_QTY DESC;"
+  },
+  {
+    "example_id": "SALES_064",
+    "description": "Find slow-moving items: items with no sales in the last 90 days",
+    "sql_query": "SELECT im.ITEM_CODE, im.ITEM_EDESC\nFROM IP_ITEM_MASTER_SETUP im\nWHERE im.DELETED_FLAG = 'N'\n  AND NOT EXISTS (\n    SELECT 1 FROM SA_SALES_INVOICE i\n    WHERE i.ITEM_CODE = im.ITEM_CODE AND i.COMPANY_CODE = im.COMPANY_CODE\n      AND TRUNC(i.SALES_DATE) >= TO_DATE('2026-05-07', 'YYYY-MM-DD')\n      AND TRUNC(i.SALES_DATE) < TO_DATE('2026-08-06', 'YYYY-MM-DD')\n      AND i.DELETED_FLAG = 'N'\n  );"
+  },
+  {
+    "example_id": "SALES_065",
+    "description": "Get all pending sales orders (not yet fully completed)",
+    "sql_query": "SELECT ORDER_NO, ORDER_DATE, CUSTOMER_CODE, ITEM_CODE, QUANTITY, COMPLETED_QUANTITY FROM SA_SALES_ORDER WHERE COMPLETED_QUANTITY < QUANTITY AND CANCEL_FLAG != 'Y' AND DELETED_FLAG = 'N';"
+  },
+  {
+    "example_id": "SALES_066",
+    "description": "Get total value of sales orders booked in the previous month",
+    "sql_query": "SELECT SUM(CALC_TOTAL_PRICE) AS TOTAL_ORDER_VALUE\nFROM SA_SALES_ORDER\nWHERE TRUNC(ORDER_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n  AND TRUNC(ORDER_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n  AND DELETED_FLAG = 'N';"
+  },
+  {
+    "example_id": "SALES_067",
+    "description": "Get all cancelled sales orders in the previous month",
+    "sql_query": "SELECT ORDER_NO, ORDER_DATE, CUSTOMER_CODE, CANCEL_DATE, CANCEL_BY, CANCEL_REMARKS\nFROM SA_SALES_ORDER\nWHERE CANCEL_FLAG = 'Y'\n  AND TRUNC(CANCEL_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n  AND TRUNC(CANCEL_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD');"
+  },
+  {
+    "example_id": "SALES_068",
+    "description": "Compare total order value vs total discount given in the previous month",
+    "sql_query": "SELECT SUM(CALC_TOTAL_PRICE) AS NET_ORDER_VALUE, SUM(TOTAL_DISCOUNT) AS TOTAL_DISCOUNT_GIVEN\nFROM SA_SALES_ORDER\nWHERE TRUNC(ORDER_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n  AND TRUNC(ORDER_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n  AND DELETED_FLAG = 'N';"
+  },
+  {
+    "example_id": "SALES_069",
+    "description": "Get orders with delivery date overdue and not yet completed",
+    "sql_query": "SELECT ORDER_NO, CUSTOMER_CODE, DELIVERY_DATE, QUANTITY, COMPLETED_QUANTITY FROM SA_SALES_ORDER WHERE DELIVERY_DATE < SYSDATE AND COMPLETED_QUANTITY < QUANTITY AND CANCEL_FLAG != 'Y' AND DELETED_FLAG = 'N';"
+  },
+  {
+    "example_id": "SALES_070",
+    "description": "Get order fulfillment rate (completed quantity vs ordered quantity) by customer",
+    "sql_query": "SELECT CUSTOMER_CODE,\n       SUM(QUANTITY) AS ORDERED_QTY,\n       SUM(COMPLETED_QUANTITY) AS FULFILLED_QTY,\n       ROUND(SUM(COMPLETED_QUANTITY) * 100 / NULLIF(SUM(QUANTITY), 0), 2) AS FULFILLMENT_PCT\nFROM SA_SALES_ORDER\nWHERE DELETED_FLAG = 'N'\nGROUP BY CUSTOMER_CODE\nORDER BY FULFILLMENT_PCT ASC;"
+  },
+  {
+    "example_id": "SALES_071",
+    "description": "Get top 10 items with highest ordered quantity in the previous month and give 10 row only",
+    "sql_query": "SELECT * FROM (\n  SELECT ITEM_CODE, SUM(QUANTITY) AS TOTAL_ORDERED_QTY\n  FROM SA_SALES_ORDER\n  WHERE TRUNC(ORDER_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n    AND TRUNC(ORDER_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n    AND DELETED_FLAG = 'N'\n  GROUP BY ITEM_CODE\n  ORDER BY TOTAL_ORDERED_QTY DESC\n) WHERE ROWNUM <= 10;"
+  },
+  {
+    "example_id": "SALES_072",
+    "description": "Get sales orders grouped by sales tax code showing tax collected",
+    "sql_query": "SELECT SALES_TAX_CODE, SUM(SALES_TAX_AMOUNT) AS TOTAL_TAX_COLLECTED\nFROM SA_SALES_ORDER\nWHERE TRUNC(ORDER_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n  AND TRUNC(ORDER_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n  AND DELETED_FLAG = 'N'\nGROUP BY SALES_TAX_CODE;"
+  },
+  {
+    "example_id": "SALES_073",
+    "description": "Get order-to-invoice conversion: orders that have zero completed quantity",
+    "sql_query": "SELECT ORDER_NO, ORDER_DATE, CUSTOMER_CODE, ITEM_CODE, QUANTITY FROM SA_SALES_ORDER WHERE COMPLETED_QUANTITY = 0 AND CANCEL_FLAG != 'Y' AND DELETED_FLAG = 'N';"
+  },
+  {
+    "example_id": "SALES_074",
+    "description": "Get total selling price vs cost price margin for orders in the previous month",
+    "sql_query": "SELECT ITEM_CODE,\n       SUM(QUANTITY * SELLING_PRICE) AS TOTAL_SELLING_VALUE,\n       SUM(QUANTITY * COST_PRICE) AS TOTAL_COST_VALUE,\n       SUM(QUANTITY * (SELLING_PRICE - COST_PRICE)) AS TOTAL_MARGIN\nFROM SA_SALES_ORDER\nWHERE TRUNC(ORDER_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n  AND TRUNC(ORDER_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n  AND DELETED_FLAG = 'N'\nGROUP BY ITEM_CODE\nORDER BY TOTAL_MARGIN DESC;"
+  },
+  {
+    "example_id": "SALES_075",
+    "description": "Get all sales chalans (delivery notes) issued in the previous month",
+    "sql_query": "SELECT CHALAN_NO, CHALAN_DATE, CUSTOMER_CODE, ITEM_CODE, QUANTITY, TOTAL_PRICE FROM SA_SALES_CHALAN WHERE TRUNC(CHALAN_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD') AND TRUNC(CHALAN_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD') AND DELETED_FLAG = 'N';"
+  },
+  {
+    "example_id": "SALES_076",
+    "description": "Get total dispatched quantity per branch in the previous month",
+    "sql_query": "SELECT BRANCH_CODE, SUM(QUANTITY) AS TOTAL_DISPATCHED_QTY\nFROM SA_SALES_CHALAN\nWHERE TRUNC(CHALAN_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n  AND TRUNC(CHALAN_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n  AND DELETED_FLAG = 'N'\nGROUP BY BRANCH_CODE\nORDER BY TOTAL_DISPATCHED_QTY DESC;"
+  },
+  {
+    "example_id": "SALES_077",
+    "description": "Get total VAT and discount amount collected via delivery chalans last month",
+    "sql_query": "SELECT SUM(VAT_AMOUNT) AS TOTAL_VAT, SUM(DISCOUNT_AMOUNT) AS TOTAL_DISCOUNT\nFROM SA_SALES_CHALAN\nWHERE TRUNC(CHALAN_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n  AND TRUNC(CHALAN_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n  AND DELETED_FLAG = 'N';"
+  },
+  {
+    "example_id": "SALES_078",
+    "description": "Get chalans dispatched to a specific shipping address",
+    "sql_query": "SELECT CHALAN_NO, CHALAN_DATE, CUSTOMER_CODE, SHIPPING_ADDRESS, TOTAL_PRICE FROM SA_SALES_CHALAN WHERE SHIPPING_ADDRESS LIKE '%Kathmandu%' AND DELETED_FLAG = 'N';"
+  },
+  {
+    "example_id": "SALES_079",
+    "description": "Get chalan-wise sales report grouped by agent code",
+    "sql_query": "SELECT AGENT_CODE, COUNT(DISTINCT CHALAN_NO) AS CHALAN_COUNT, SUM(TOTAL_PRICE) AS TOTAL_SALES\nFROM SA_SALES_CHALAN\nWHERE TRUNC(CHALAN_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n  AND TRUNC(CHALAN_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n  AND DELETED_FLAG = 'N'\nGROUP BY AGENT_CODE\nORDER BY TOTAL_SALES DESC;"
+  },
+  {
+    "example_id": "SALES_080",
+    "description": "Find chalans where completed quantity is less than dispatched quantity",
+    "sql_query": "SELECT CHALAN_NO, ITEM_CODE, QUANTITY, COMPLETED_QUANTITY FROM SA_SALES_CHALAN WHERE COMPLETED_QUANTITY < QUANTITY AND DELETED_FLAG = 'N';"
+  },
+  {
+    "example_id": "SALES_081",
+    "description": "Get total excise duty and luxury tax collected through chalans by branch",
+    "sql_query": "SELECT BRANCH_CODE, SUM(EXCISE_DUTY_AMOUNT) AS TOTAL_EXCISE, SUM(LUXURY_TAX_AMOUNT) AS TOTAL_LUXURY_TAX\nFROM SA_SALES_CHALAN\nWHERE TRUNC(CHALAN_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n  AND TRUNC(CHALAN_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n  AND DELETED_FLAG = 'N'\nGROUP BY BRANCH_CODE;"
+  },
+  {
+    "example_id": "SALES_082",
+    "description": "Get chalan transactions with free quantity given per item",
+    "sql_query": "SELECT ITEM_CODE, SUM(QUANTITY) AS TOTAL_QTY, SUM(FREE_QTY) AS TOTAL_FREE_QTY FROM SA_SALES_CHALAN WHERE DELETED_FLAG = 'N' GROUP BY ITEM_CODE HAVING SUM(FREE_QTY) > 0;"
+  },
+  {
+    "example_id": "SALES_083",
+    "description": "Get total sales value dispatched via chalan for a specific sector",
+    "sql_query": "SELECT SECTOR_NAME, SUM(TOTAL_PRICE) AS TOTAL_SALES FROM SA_SALES_CHALAN WHERE SECTOR_CODE = 'SEC01' AND DELETED_FLAG = 'N' GROUP BY SECTOR_NAME;"
+  },
+  {
+    "example_id": "SALES_084",
+    "description": "Get chalan count and total value per payment mode for the previous month",
+    "sql_query": "SELECT PAYMENT_MODE, COUNT(DISTINCT CHALAN_NO) AS CHALAN_COUNT, SUM(TOTAL_PRICE) AS TOTAL_SALES\nFROM SA_SALES_CHALAN\nWHERE TRUNC(CHALAN_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n  AND TRUNC(CHALAN_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n  AND DELETED_FLAG = 'N'\nGROUP BY PAYMENT_MODE\nORDER BY TOTAL_SALES DESC;"
+  },
+  {
+    "example_id": "SALES_085",
+    "description": "Get total sales returns value for the previous month",
+    "sql_query": "SELECT SUM(TOTAL_PRICE) AS TOTAL_RETURN_VALUE\nFROM SA_SALES_RETURN\nWHERE TRUNC(RETURN_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n  AND TRUNC(RETURN_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n  AND DELETED_FLAG = 'N';"
+  },
+  {
+    "example_id": "SALES_086",
+    "description": "Get sales returns grouped by reason for the previous month",
+    "sql_query": "SELECT REASON, COUNT(*) AS RETURN_COUNT, SUM(TOTAL_PRICE) AS TOTAL_RETURN_VALUE\nFROM SA_SALES_RETURN\nWHERE TRUNC(RETURN_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n  AND TRUNC(RETURN_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n  AND DELETED_FLAG = 'N'\nGROUP BY REASON\nORDER BY TOTAL_RETURN_VALUE DESC;"
+  },
+  {
+    "example_id": "SALES_087",
+    "description": "Get top 10 customers with the highest return value in the previous month and and give 10 row only",
+    "sql_query": "SELECT * FROM (\n  SELECT CUSTOMER_CODE, SUM(TOTAL_PRICE) AS TOTAL_RETURN_VALUE\n  FROM SA_SALES_RETURN\n  WHERE TRUNC(RETURN_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n    AND TRUNC(RETURN_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n    AND DELETED_FLAG = 'N'\n  GROUP BY CUSTOMER_CODE\n  ORDER BY TOTAL_RETURN_VALUE DESC\n) WHERE ROWNUM <= 10;"
+  },
+  {
+    "example_id": "SALES_088",
+    "description": "Get top 10 items with the highest return quantity in the previous month and give 10 row only",
+    "sql_query": "SELECT * FROM (\n  SELECT ITEM_CODE, SUM(QUANTITY) AS TOTAL_RETURN_QTY\n  FROM SA_SALES_RETURN\n  WHERE TRUNC(RETURN_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n    AND TRUNC(RETURN_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n    AND DELETED_FLAG = 'N'\n  GROUP BY ITEM_CODE\n  ORDER BY TOTAL_RETURN_QTY DESC\n) WHERE ROWNUM <= 10;"
+  },
+  {
+    "example_id": "SALES_089",
+    "description": "Calculate net sales (gross sales minus returns) for the previous month",
+    "sql_query": "SELECT\n  (SELECT NVL(SUM(TOTAL_PRICE), 0) FROM SA_SALES_INVOICE\n   WHERE TRUNC(SALES_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD') AND TRUNC(SALES_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD') AND DELETED_FLAG = 'N')\n  -\n  (SELECT NVL(SUM(TOTAL_PRICE), 0) FROM SA_SALES_RETURN\n   WHERE TRUNC(RETURN_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD') AND TRUNC(RETURN_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD') AND DELETED_FLAG = 'N')\n  AS NET_SALES\nFROM DUAL;"
+  },
+  {
+    "example_id": "SALES_090",
+    "description": "Get return rate percentage (returns value / gross sales value) for the previous month",
+    "sql_query": "SELECT\n  ROUND(\n    (SELECT NVL(SUM(TOTAL_PRICE), 0) FROM SA_SALES_RETURN\n     WHERE TRUNC(RETURN_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD') AND TRUNC(RETURN_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD') AND DELETED_FLAG = 'N')\n    /\n    NULLIF((SELECT SUM(TOTAL_PRICE) FROM SA_SALES_INVOICE\n     WHERE TRUNC(SALES_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD') AND TRUNC(SALES_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD') AND DELETED_FLAG = 'N'), 0) * 100\n  , 2) AS RETURN_RATE_PCT\nFROM DUAL;"
+  },
+  {
+    "example_id": "SALES_091",
+    "description": "Get sales returns grouped by branch and division for the previous month",
+    "sql_query": "SELECT BRANCH_CODE, DIVISION_CODE, SUM(TOTAL_PRICE) AS TOTAL_RETURN_VALUE\nFROM SA_SALES_RETURN\nWHERE TRUNC(RETURN_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n  AND TRUNC(RETURN_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n  AND DELETED_FLAG = 'N'\nGROUP BY BRANCH_CODE, DIVISION_CODE\nORDER BY TOTAL_RETURN_VALUE DESC;"
+  },
+  {
+    "example_id": "SALES_092",
+    "description": "Get sales returns caused by defective items in the previous month",
+    "sql_query": "SELECT RETURN_NO, RETURN_DATE, CUSTOMER_CODE, ITEM_CODE, QUANTITY, REASON FROM SA_SALES_RETURN WHERE REASON LIKE '%defect%' AND TRUNC(RETURN_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD') AND TRUNC(RETURN_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD') AND DELETED_FLAG = 'N';"
+  },
+  {
+    "example_id": "SALES_093",
+    "description": "Get total VAT and excise amount reversed due to sales returns last month",
+    "sql_query": "SELECT SUM(VAT_AMOUNT) AS TOTAL_VAT_REVERSED, SUM(EXCISE_AMOUNT) AS TOTAL_EXCISE_REVERSED\nFROM SA_SALES_RETURN\nWHERE TRUNC(RETURN_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n  AND TRUNC(RETURN_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n  AND DELETED_FLAG = 'N';"
+  },
+  {
+    "example_id": "SALES_094",
+    "description": "Get sales returns grouped by employee/salesperson to identify accounts with high return rates",
+    "sql_query": "SELECT EMPLOYEE_CODE, COUNT(*) AS RETURN_COUNT, SUM(TOTAL_PRICE) AS TOTAL_RETURN_VALUE\nFROM SA_SALES_RETURN\nWHERE TRUNC(RETURN_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n  AND TRUNC(RETURN_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n  AND DELETED_FLAG = 'N'\nGROUP BY EMPLOYEE_CODE\nORDER BY TOTAL_RETURN_VALUE DESC;"
+  },
+  {
+    "example_id": "SALES_095",
+    "description": "Generate a full previous-month sales summary: gross sales, returns, and net sales by branch",
+    "sql_query": "SELECT\n  inv.BRANCH_CODE,\n  NVL(inv.GROSS_SALES, 0) AS GROSS_SALES,\n  NVL(ret.RETURN_VALUE, 0) AS RETURN_VALUE,\n  NVL(inv.GROSS_SALES, 0) - NVL(ret.RETURN_VALUE, 0) AS NET_SALES\nFROM\n  (SELECT BRANCH_CODE, SUM(TOTAL_PRICE) AS GROSS_SALES\n   FROM SA_SALES_INVOICE\n   WHERE TRUNC(SALES_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD') AND TRUNC(SALES_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD') AND DELETED_FLAG = 'N'\n   GROUP BY BRANCH_CODE) inv\nLEFT JOIN\n  (SELECT BRANCH_CODE, SUM(TOTAL_PRICE) AS RETURN_VALUE\n   FROM SA_SALES_RETURN\n   WHERE TRUNC(RETURN_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD') AND TRUNC(RETURN_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD') AND DELETED_FLAG = 'N'\n   GROUP BY BRANCH_CODE) ret\nON inv.BRANCH_CODE = ret.BRANCH_CODE\nORDER BY NET_SALES DESC;"
+  },
+  {
+    "example_id": "SALES_096",
+    "description": "Compare order booked value vs actual invoiced value for the previous month, by customer",
+    "sql_query": "SELECT\n  o.CUSTOMER_CODE,\n  NVL(o.ORDERED_VALUE, 0) AS ORDERED_VALUE,\n  NVL(i.INVOICED_VALUE, 0) AS INVOICED_VALUE,\n  ROUND(NVL(i.INVOICED_VALUE, 0) * 100 / NULLIF(o.ORDERED_VALUE, 0), 2) AS CONVERSION_PCT\nFROM\n  (SELECT CUSTOMER_CODE, SUM(CALC_TOTAL_PRICE) AS ORDERED_VALUE\n   FROM SA_SALES_ORDER\n   WHERE TRUNC(ORDER_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD') AND TRUNC(ORDER_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD') AND DELETED_FLAG = 'N'\n   GROUP BY CUSTOMER_CODE) o\nLEFT JOIN\n  (SELECT CUSTOMER_CODE, SUM(TOTAL_PRICE) AS INVOICED_VALUE\n   FROM SA_SALES_INVOICE\n   WHERE TRUNC(SALES_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD') AND TRUNC(SALES_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD') AND DELETED_FLAG = 'N'\n   GROUP BY CUSTOMER_CODE) i\nON o.CUSTOMER_CODE = i.CUSTOMER_CODE\nORDER BY CONVERSION_PCT ASC;"
+  },
+  {
+    "example_id": "SALES_097",
+    "description": "Get item-wise dispatch-vs-invoice reconciliation for the previous month",
+    "sql_query": "SELECT\n  im.ITEM_CODE, im.ITEM_EDESC,\n  NVL(c.DISPATCHED_QTY, 0) AS DISPATCHED_QTY,\n  NVL(inv.INVOICED_QTY, 0) AS INVOICED_QTY,\n  NVL(c.DISPATCHED_QTY, 0) - NVL(inv.INVOICED_QTY, 0) AS QTY_VARIANCE\nFROM IP_ITEM_MASTER_SETUP im\nLEFT JOIN\n  (SELECT ITEM_CODE, SUM(QUANTITY) AS DISPATCHED_QTY FROM SA_SALES_CHALAN\n   WHERE TRUNC(CHALAN_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD') AND TRUNC(CHALAN_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD') AND DELETED_FLAG = 'N'\n   GROUP BY ITEM_CODE) c ON im.ITEM_CODE = c.ITEM_CODE\nLEFT JOIN\n  (SELECT ITEM_CODE, SUM(QUANTITY) AS INVOICED_QTY FROM SA_SALES_INVOICE\n   WHERE TRUNC(SALES_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD') AND TRUNC(SALES_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD') AND DELETED_FLAG = 'N'\n   GROUP BY ITEM_CODE) inv ON im.ITEM_CODE = inv.ITEM_CODE\nWHERE im.DELETED_FLAG = 'N'\n  AND (NVL(c.DISPATCHED_QTY, 0) != 0 OR NVL(inv.INVOICED_QTY, 0) != 0);"
+  },
+  {
+    "example_id": "SALES_098",
+    "description": "Build a full monthly sales performance report by category: orders, invoiced sales, and returns",
+    "sql_query": "SELECT\n  c.CATEGORY_EDESC,\n  NVL(o.ORDER_VALUE, 0) AS ORDER_VALUE,\n  NVL(i.SALES_VALUE, 0) AS SALES_VALUE,\n  NVL(r.RETURN_VALUE, 0) AS RETURN_VALUE,\n  NVL(i.SALES_VALUE, 0) - NVL(r.RETURN_VALUE, 0) AS NET_SALES_VALUE\nFROM IP_CATEGORY_CODE c\nLEFT JOIN\n  (SELECT im.CATEGORY_CODE, SUM(o.CALC_TOTAL_PRICE) AS ORDER_VALUE\n   FROM SA_SALES_ORDER o\n   JOIN IP_ITEM_MASTER_SETUP im ON o.ITEM_CODE = im.ITEM_CODE AND o.COMPANY_CODE = im.COMPANY_CODE\n   WHERE TRUNC(o.ORDER_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD') AND TRUNC(o.ORDER_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD') AND o.DELETED_FLAG = 'N'\n   GROUP BY im.CATEGORY_CODE) o ON c.CATEGORY_CODE = o.CATEGORY_CODE\nLEFT JOIN\n  (SELECT im.CATEGORY_CODE, SUM(i.TOTAL_PRICE) AS SALES_VALUE\n   FROM SA_SALES_INVOICE i\n   JOIN IP_ITEM_MASTER_SETUP im ON i.ITEM_CODE = im.ITEM_CODE AND i.COMPANY_CODE = im.COMPANY_CODE\n   WHERE TRUNC(i.SALES_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD') AND TRUNC(i.SALES_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD') AND i.DELETED_FLAG = 'N'\n   GROUP BY im.CATEGORY_CODE) i ON c.CATEGORY_CODE = i.CATEGORY_CODE\nLEFT JOIN\n  (SELECT im.CATEGORY_CODE, SUM(r.TOTAL_PRICE) AS RETURN_VALUE\n   FROM SA_SALES_RETURN r\n   JOIN IP_ITEM_MASTER_SETUP im ON r.ITEM_CODE = im.ITEM_CODE AND r.COMPANY_CODE = im.COMPANY_CODE\n   WHERE TRUNC(r.RETURN_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD') AND TRUNC(r.RETURN_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD') AND r.DELETED_FLAG = 'N'\n   GROUP BY im.CATEGORY_CODE) r ON c.CATEGORY_CODE = r.CATEGORY_CODE\nWHERE c.DELETED_FLAG = 'N'\nORDER BY NET_SALES_VALUE DESC;"
+  },
+  {
+    "example_id": "SALES_099",
+    "description": "Get a consolidated previous-month sales dashboard: total invoices, total quantity, total sales, total returns, and net sales",
+    "sql_query": "SELECT\n  (SELECT COUNT(DISTINCT SALES_NO) FROM SA_SALES_INVOICE\n   WHERE TRUNC(SALES_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD') AND TRUNC(SALES_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD') AND DELETED_FLAG = 'N') AS TOTAL_INVOICES,\n  (SELECT SUM(QUANTITY) FROM SA_SALES_INVOICE\n   WHERE TRUNC(SALES_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD') AND TRUNC(SALES_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD') AND DELETED_FLAG = 'N') AS TOTAL_QUANTITY,\n  (SELECT SUM(TOTAL_PRICE) FROM SA_SALES_INVOICE\n   WHERE TRUNC(SALES_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD') AND TRUNC(SALES_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD') AND DELETED_FLAG = 'N') AS TOTAL_SALES,\n  (SELECT SUM(TOTAL_PRICE) FROM SA_SALES_RETURN\n   WHERE TRUNC(RETURN_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD') AND TRUNC(RETURN_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD') AND DELETED_FLAG = 'N') AS TOTAL_RETURNS,\n  (SELECT SUM(TOTAL_PRICE) FROM SA_SALES_INVOICE\n   WHERE TRUNC(SALES_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD') AND TRUNC(SALES_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD') AND DELETED_FLAG = 'N')\n  -\n  (SELECT NVL(SUM(TOTAL_PRICE), 0) FROM SA_SALES_RETURN\n   WHERE TRUNC(RETURN_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD') AND TRUNC(RETURN_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD') AND DELETED_FLAG = 'N') AS NET_SALES\nFROM DUAL;"
+  },
+  {
+    "example_id": "SALES_100",
+    "description": "Get total sales value and number of distinct customers served per division for the previous month",
+    "sql_query": "SELECT DIVISION_CODE,\n       COUNT(DISTINCT CUSTOMER_CODE) AS DISTINCT_CUSTOMERS,\n       SUM(TOTAL_PRICE) AS TOTAL_SALES\nFROM SA_SALES_INVOICE\nWHERE TRUNC(SALES_DATE) >= TO_DATE('2026-07-01', 'YYYY-MM-DD')\n  AND TRUNC(SALES_DATE) < TO_DATE('2026-08-01', 'YYYY-MM-DD')\n  AND DELETED_FLAG = 'N'\nGROUP BY DIVISION_CODE\nORDER BY TOTAL_SALES DESC;"
+  }
+]

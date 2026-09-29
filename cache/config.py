@@ -1,0 +1,4 @@
+from settings import REDIS_DB, REDIS_HOST, REDIS_PORT, REDIS_TTL
+
+
+__all__ = ["REDIS_HOST", "REDIS_PORT", "REDIS_DB", "REDIS_TTL"]

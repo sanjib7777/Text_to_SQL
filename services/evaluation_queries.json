@@ -1,0 +1,462 @@
+{
+  "dataset_name": "sales_report_eval_queries",
+  "description": "Natural-language sales queries labeled by difficulty with matching Oracle SQL.",
+  "queries": [
+    {
+      "id": 1,
+      "type": "easy",
+      "query": "Show all sales orders for company 01 and branch 01.02.",
+      "true_sql": "SELECT o.CUSTOMER_CODE, o.ITEM_CODE, o.UNIT_PRICE, o.CALC_TOTAL_PRICE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.BRANCH_CODE = '01.02' AND o.DELETED_FLAG = 'N' ORDER BY o.ORDER_DATE"
+    },
+    {
+      "id": 2,
+      "type": "easy",
+      "query": "List the item descriptions for all sales orders with company code 01.",
+      "true_sql": "SELECT o.CUSTOMER_CODE, im.ITEM_EDESC, o.UNIT_PRICE FROM SA_SALES_ORDER o JOIN IP_ITEM_MASTER_SETUP im ON o.ITEM_CODE = im.ITEM_CODE AND o.COMPANY_CODE = im.COMPANY_CODE WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' ORDER BY o.ORDER_DATE"
+    },
+    {
+      "id": 3,
+      "type": "easy",
+      "query": "Return sales orders placed in 2025.",
+      "true_sql": "SELECT o.CUSTOMER_CODE, o.ITEM_CODE, o.CALC_TOTAL_PRICE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND TRUNC(o.ORDER_DATE) >= TO_DATE('2025-01-01', 'YYYY-MM-DD') AND TRUNC(o.ORDER_DATE) < TO_DATE('2026-01-01', 'YYYY-MM-DD') AND o.DELETED_FLAG = 'N' ORDER BY o.ORDER_DATE"
+    },
+    {
+      "id": 4,
+      "type": "easy",
+      "query": "Show the unit price and total price for order date 2025-07-17.",
+      "true_sql": "SELECT o.UNIT_PRICE, o.CALC_TOTAL_PRICE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND TRUNC(o.ORDER_DATE) = TO_DATE('2025-07-17', 'YYYY-MM-DD') AND o.DELETED_FLAG = 'N' ORDER BY o.ORDER_DATE"
+    },
+    {
+      "id": 5,
+      "type": "easy",
+      "query": "Find sales orders for branch 01.02 that are not deleted.",
+      "true_sql": "SELECT o.CUSTOMER_CODE, o.ITEM_CODE, o.CALC_TOTAL_PRICE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.BRANCH_CODE = '01.02' AND o.DELETED_FLAG = 'N' ORDER BY o.ORDER_DATE"
+    },
+    {
+      "id": 6,
+      "type": "easy",
+      "query": "Display customer code and item description for active sales records.",
+      "true_sql": "SELECT o.CUSTOMER_CODE, im.ITEM_EDESC FROM SA_SALES_ORDER o JOIN IP_ITEM_MASTER_SETUP im ON o.ITEM_CODE = im.ITEM_CODE AND o.COMPANY_CODE = im.COMPANY_CODE WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' ORDER BY o.ORDER_DATE"
+    },
+    {
+      "id": 7,
+      "type": "easy",
+      "query": "Show all sales orders sorted by order date descending.",
+      "true_sql": "SELECT o.CUSTOMER_CODE, o.ITEM_CODE, o.ORDER_DATE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' ORDER BY o.ORDER_DATE DESC"
+    },
+    {
+      "id": 8,
+      "type": "easy",
+      "query": "Retrieve all sales orders with unit price greater than 100.",
+      "true_sql": "SELECT o.CUSTOMER_CODE, o.ITEM_CODE, o.UNIT_PRICE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.UNIT_PRICE > 100 AND o.DELETED_FLAG = 'N' ORDER BY o.UNIT_PRICE DESC"
+    },
+    {
+      "id": 9,
+      "type": "easy",
+      "query": "List sales orders where total price is less than 500.",
+      "true_sql": "SELECT o.CUSTOMER_CODE, o.ITEM_CODE, o.CALC_TOTAL_PRICE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.CALC_TOTAL_PRICE < 500 AND o.DELETED_FLAG = 'N' ORDER BY o.CALC_TOTAL_PRICE"
+    },
+    {
+      "id": 10,
+      "type": "easy",
+      "query": "Get the item descriptions for all non-deleted orders.",
+      "true_sql": "SELECT im.ITEM_EDESC, o.CUSTOMER_CODE FROM SA_SALES_ORDER o JOIN IP_ITEM_MASTER_SETUP im ON o.ITEM_CODE = im.ITEM_CODE AND o.COMPANY_CODE = im.COMPANY_CODE WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' ORDER BY im.ITEM_EDESC"
+    },
+    {
+      "id": 11,
+      "type": "easy",
+      "query": "Show sales orders from branch 01.03 only.",
+      "true_sql": "SELECT o.CUSTOMER_CODE, o.ITEM_CODE, o.CALC_TOTAL_PRICE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.BRANCH_CODE = '01.03' AND o.DELETED_FLAG = 'N' ORDER BY o.ORDER_DATE"
+    },
+    {
+      "id": 12,
+      "type": "easy",
+      "query": "Return the customer code and total price for each sales order.",
+      "true_sql": "SELECT o.CUSTOMER_CODE, o.CALC_TOTAL_PRICE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' ORDER BY o.CUSTOMER_CODE"
+    },
+    {
+      "id": 13,
+      "type": "easy",
+      "query": "Show item description and unit price for company 01 orders.",
+      "true_sql": "SELECT im.ITEM_EDESC, o.UNIT_PRICE FROM SA_SALES_ORDER o JOIN IP_ITEM_MASTER_SETUP im ON o.ITEM_CODE = im.ITEM_CODE AND o.COMPANY_CODE = im.COMPANY_CODE WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' ORDER BY im.ITEM_EDESC"
+    },
+    {
+      "id": 14,
+      "type": "easy",
+      "query": "List sales orders whose total price exceeds 1000.",
+      "true_sql": "SELECT o.CUSTOMER_CODE, o.ITEM_CODE, o.CALC_TOTAL_PRICE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.CALC_TOTAL_PRICE > 1000 AND o.DELETED_FLAG = 'N' ORDER BY o.CALC_TOTAL_PRICE DESC"
+    },
+    {
+      "id": 15,
+      "type": "easy",
+      "query": "Fetch sales orders for 2026 with branch 01.02.",
+      "true_sql": "SELECT o.CUSTOMER_CODE, o.ITEM_CODE, o.ORDER_DATE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.BRANCH_CODE = '01.02' AND TRUNC(o.ORDER_DATE) >= TO_DATE('2026-01-01', 'YYYY-MM-DD') AND TRUNC(o.ORDER_DATE) < TO_DATE('2027-01-01', 'YYYY-MM-DD') AND o.DELETED_FLAG = 'N' ORDER BY o.ORDER_DATE"
+    },
+    {
+      "id": 16,
+      "type": "easy",
+      "query": "Show the first 50 sales orders by order date.",
+      "true_sql": "SELECT * FROM (SELECT o.CUSTOMER_CODE, o.ITEM_CODE, o.ORDER_DATE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' ORDER BY o.ORDER_DATE) WHERE ROWNUM <= 50"
+    },
+    {
+      "id": 17,
+      "type": "easy",
+      "query": "Give me the top 20 orders by total price.",
+      "true_sql": "SELECT * FROM (SELECT o.CUSTOMER_CODE, o.CALC_TOTAL_PRICE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' ORDER BY o.CALC_TOTAL_PRICE DESC) WHERE ROWNUM <= 20"
+    },
+    {
+      "id": 18,
+      "type": "easy",
+      "query": "Return only the first 10 rows for branch 01.02.",
+      "true_sql": "SELECT * FROM (SELECT o.CUSTOMER_CODE, o.ITEM_CODE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.BRANCH_CODE = '01.02' AND o.DELETED_FLAG = 'N' ORDER BY o.ORDER_DATE) WHERE ROWNUM <= 10"
+    },
+    {
+      "id": 19,
+      "type": "easy",
+      "query": "Show the latest 15 sales orders.",
+      "true_sql": "SELECT * FROM (SELECT o.CUSTOMER_CODE, o.ORDER_DATE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' ORDER BY o.ORDER_DATE DESC) WHERE ROWNUM <= 15"
+    },
+    {
+      "id": 20,
+      "type": "easy",
+      "query": "List all active orders with item names.",
+      "true_sql": "SELECT o.CUSTOMER_CODE, im.ITEM_EDESC, o.UNIT_PRICE FROM SA_SALES_ORDER o JOIN IP_ITEM_MASTER_SETUP im ON o.ITEM_CODE = im.ITEM_CODE AND o.COMPANY_CODE = im.COMPANY_CODE WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' ORDER BY o.ORDER_DATE"
+    },
+    {
+      "id": 21,
+      "type": "easy",
+      "query": "Show sales order details for branch 01.01.",
+      "true_sql": "SELECT o.CUSTOMER_CODE, o.ITEM_CODE, o.UNIT_PRICE, o.CALC_TOTAL_PRICE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.BRANCH_CODE = '01.01' AND o.DELETED_FLAG = 'N' ORDER BY o.ORDER_DATE"
+    },
+    {
+      "id": 22,
+      "type": "easy",
+      "query": "Get customer and item details for all sales orders.",
+      "true_sql": "SELECT o.CUSTOMER_CODE, im.ITEM_EDESC, o.UNIT_PRICE FROM SA_SALES_ORDER o JOIN IP_ITEM_MASTER_SETUP im ON o.ITEM_CODE = im.ITEM_CODE AND o.COMPANY_CODE = im.COMPANY_CODE WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' ORDER BY o.CUSTOMER_CODE"
+    },
+    {
+      "id": 23,
+      "type": "easy",
+      "query": "Return orders with an amount greater than 200.",
+      "true_sql": "SELECT o.CUSTOMER_CODE, o.CALC_TOTAL_PRICE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.CALC_TOTAL_PRICE > 200 AND o.DELETED_FLAG = 'N' ORDER BY o.CALC_TOTAL_PRICE DESC"
+    },
+    {
+      "id": 24,
+      "type": "easy",
+      "query": "Show sales orders for items with unit price below 50.",
+      "true_sql": "SELECT o.CUSTOMER_CODE, o.ITEM_CODE, o.UNIT_PRICE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.UNIT_PRICE < 50 AND o.DELETED_FLAG = 'N' ORDER BY o.UNIT_PRICE"
+    },
+    {
+      "id": 25,
+      "type": "easy",
+      "query": "Display all sales orders for the month of July 2025.",
+      "true_sql": "SELECT o.CUSTOMER_CODE, o.ITEM_CODE, o.ORDER_DATE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND TRUNC(o.ORDER_DATE) >= TO_DATE('2025-07-01', 'YYYY-MM-DD') AND TRUNC(o.ORDER_DATE) < TO_DATE('2025-08-01', 'YYYY-MM-DD') AND o.DELETED_FLAG = 'N' ORDER BY o.ORDER_DATE"
+    },
+    {
+      "id": 26,
+      "type": "easy",
+      "query": "Find orders placed after 2025-07-20.",
+      "true_sql": "SELECT o.CUSTOMER_CODE, o.ITEM_CODE, o.ORDER_DATE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND TRUNC(o.ORDER_DATE) > TO_DATE('2025-07-20', 'YYYY-MM-DD') AND o.DELETED_FLAG = 'N' ORDER BY o.ORDER_DATE"
+    },
+    {
+      "id": 27,
+      "type": "easy",
+      "query": "Show orders where the total price is between 300 and 700.",
+      "true_sql": "SELECT o.CUSTOMER_CODE, o.CALC_TOTAL_PRICE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.CALC_TOTAL_PRICE BETWEEN 300 AND 700 AND o.DELETED_FLAG = 'N' ORDER BY o.CALC_TOTAL_PRICE"
+    },
+    {
+      "id": 28,
+      "type": "easy",
+      "query": "List sales orders with item description containing pen.",
+      "true_sql": "SELECT o.CUSTOMER_CODE, im.ITEM_EDESC, o.UNIT_PRICE FROM SA_SALES_ORDER o JOIN IP_ITEM_MASTER_SETUP im ON o.ITEM_CODE = im.ITEM_CODE AND o.COMPANY_CODE = im.COMPANY_CODE WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' AND LOWER(im.ITEM_EDESC) LIKE '%pen%' ORDER BY im.ITEM_EDESC"
+    },
+    {
+      "id": 29,
+      "type": "easy",
+      "query": "Show all orders from branch 01.04.",
+      "true_sql": "SELECT o.CUSTOMER_CODE, o.ITEM_CODE, o.CALC_TOTAL_PRICE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.BRANCH_CODE = '01.04' AND o.DELETED_FLAG = 'N' ORDER BY o.ORDER_DATE"
+    },
+    {
+      "id": 30,
+      "type": "easy",
+      "query": "Show customer code and unit price for all non-deleted orders.",
+      "true_sql": "SELECT o.CUSTOMER_CODE, o.UNIT_PRICE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' ORDER BY o.CUSTOMER_CODE"
+    },
+    {
+      "id": 31,
+      "type": "easy",
+      "query": "List all sales orders with item description and total price.",
+      "true_sql": "SELECT im.ITEM_EDESC, o.CALC_TOTAL_PRICE FROM SA_SALES_ORDER o JOIN IP_ITEM_MASTER_SETUP im ON o.ITEM_CODE = im.ITEM_CODE AND o.COMPANY_CODE = im.COMPANY_CODE WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' ORDER BY o.CALC_TOTAL_PRICE DESC"
+    },
+    {
+      "id": 32,
+      "type": "easy",
+      "query": "Return orders where total price is exactly 100.",
+      "true_sql": "SELECT o.CUSTOMER_CODE, o.CALC_TOTAL_PRICE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.CALC_TOTAL_PRICE = 100 AND o.DELETED_FLAG = 'N' ORDER BY o.ORDER_DATE"
+    },
+    {
+      "id": 33,
+      "type": "easy",
+      "query": "Find orders with unit price above 80.",
+      "true_sql": "SELECT o.CUSTOMER_CODE, o.ITEM_CODE, o.UNIT_PRICE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.UNIT_PRICE > 80 AND o.DELETED_FLAG = 'N' ORDER BY o.UNIT_PRICE DESC"
+    },
+    {
+      "id": 34,
+      "type": "easy",
+      "query": "Show sales orders for the year 2024.",
+      "true_sql": "SELECT o.CUSTOMER_CODE, o.ITEM_CODE, o.ORDER_DATE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND TRUNC(o.ORDER_DATE) >= TO_DATE('2024-01-01', 'YYYY-MM-DD') AND TRUNC(o.ORDER_DATE) < TO_DATE('2025-01-01', 'YYYY-MM-DD') AND o.DELETED_FLAG = 'N' ORDER BY o.ORDER_DATE"
+    },
+    {
+      "id": 35,
+      "type": "medium",
+      "query": "Show total sales value by item for branch 01.02 in 2025.",
+      "true_sql": "SELECT im.ITEM_EDESC, SUM(o.CALC_TOTAL_PRICE) AS TOTAL_SALES FROM SA_SALES_ORDER o JOIN IP_ITEM_MASTER_SETUP im ON o.ITEM_CODE = im.ITEM_CODE AND o.COMPANY_CODE = im.COMPANY_CODE WHERE o.COMPANY_CODE = '01' AND o.BRANCH_CODE = '01.02' AND o.DELETED_FLAG = 'N' AND TRUNC(o.ORDER_DATE) >= TO_DATE('2025-01-01', 'YYYY-MM-DD') AND TRUNC(o.ORDER_DATE) < TO_DATE('2026-01-01', 'YYYY-MM-DD') GROUP BY im.ITEM_EDESC ORDER BY TOTAL_SALES DESC"
+    },
+    {
+      "id": 36,
+      "type": "medium",
+      "query": "Find the average unit price per item for company 01.",
+      "true_sql": "SELECT im.ITEM_EDESC, AVG(o.UNIT_PRICE) AS AVG_UNIT_PRICE FROM SA_SALES_ORDER o JOIN IP_ITEM_MASTER_SETUP im ON o.ITEM_CODE = im.ITEM_CODE AND o.COMPANY_CODE = im.COMPANY_CODE WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' GROUP BY im.ITEM_EDESC ORDER BY AVG_UNIT_PRICE DESC"
+    },
+    {
+      "id": 37,
+      "type": "medium",
+      "query": "List the number of orders per customer for branch 01.02.",
+      "true_sql": "SELECT o.CUSTOMER_CODE, COUNT(*) AS ORDER_COUNT FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.BRANCH_CODE = '01.02' AND o.DELETED_FLAG = 'N' GROUP BY o.CUSTOMER_CODE ORDER BY ORDER_COUNT DESC"
+    },
+    {
+      "id": 38,
+      "type": "medium",
+      "query": "Show total revenue by month for 2025.",
+      "true_sql": "SELECT TO_CHAR(o.ORDER_DATE, 'YYYY-MM') AS ORDER_MONTH, SUM(o.CALC_TOTAL_PRICE) AS TOTAL_REVENUE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' AND TRUNC(o.ORDER_DATE) >= TO_DATE('2025-01-01', 'YYYY-MM-DD') AND TRUNC(o.ORDER_DATE) < TO_DATE('2026-01-01', 'YYYY-MM-DD') GROUP BY TO_CHAR(o.ORDER_DATE, 'YYYY-MM') ORDER BY ORDER_MONTH"
+    },
+    {
+      "id": 39,
+      "type": "medium",
+      "query": "Find items with total sales above 5000.",
+      "true_sql": "SELECT im.ITEM_EDESC, SUM(o.CALC_TOTAL_PRICE) AS TOTAL_SALES FROM SA_SALES_ORDER o JOIN IP_ITEM_MASTER_SETUP im ON o.ITEM_CODE = im.ITEM_CODE AND o.COMPANY_CODE = im.COMPANY_CODE WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' GROUP BY im.ITEM_EDESC HAVING SUM(o.CALC_TOTAL_PRICE) > 5000 ORDER BY TOTAL_SALES DESC"
+    },
+    {
+      "id": 40,
+      "type": "medium",
+      "query": "Show the top 10 customers by total sales value.",
+      "true_sql": "SELECT * FROM (SELECT o.CUSTOMER_CODE, SUM(o.CALC_TOTAL_PRICE) AS TOTAL_SALES FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' GROUP BY o.CUSTOMER_CODE ORDER BY TOTAL_SALES DESC) WHERE ROWNUM <= 10"
+    },
+    {
+      "id": 41,
+      "type": "medium",
+      "query": "Retrieve the total sales by item description for July 2025.",
+      "true_sql": "SELECT im.ITEM_EDESC, SUM(o.CALC_TOTAL_PRICE) AS TOTAL_SALES FROM SA_SALES_ORDER o JOIN IP_ITEM_MASTER_SETUP im ON o.ITEM_CODE = im.ITEM_CODE AND o.COMPANY_CODE = im.COMPANY_CODE WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' AND TRUNC(o.ORDER_DATE) >= TO_DATE('2025-07-01', 'YYYY-MM-DD') AND TRUNC(o.ORDER_DATE) < TO_DATE('2025-08-01', 'YYYY-MM-DD') GROUP BY im.ITEM_EDESC ORDER BY TOTAL_SALES DESC"
+    },
+    {
+      "id": 42,
+      "type": "medium",
+      "query": "Count the number of orders by branch.",
+      "true_sql": "SELECT o.BRANCH_CODE, COUNT(*) AS ORDER_COUNT FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' GROUP BY o.BRANCH_CODE ORDER BY ORDER_COUNT DESC"
+    },
+    {
+      "id": 43,
+      "type": "medium",
+      "query": "Show the total amount spent per customer in branch 01.02.",
+      "true_sql": "SELECT o.CUSTOMER_CODE, SUM(o.CALC_TOTAL_PRICE) AS TOTAL_AMOUNT FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.BRANCH_CODE = '01.02' AND o.DELETED_FLAG = 'N' GROUP BY o.CUSTOMER_CODE ORDER BY TOTAL_AMOUNT DESC"
+    },
+    {
+      "id": 44,
+      "type": "medium",
+      "query": "Display the latest order date per customer.",
+      "true_sql": "SELECT o.CUSTOMER_CODE, MAX(o.ORDER_DATE) AS LAST_ORDER_DATE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' GROUP BY o.CUSTOMER_CODE ORDER BY LAST_ORDER_DATE DESC"
+    },
+    {
+      "id": 45,
+      "type": "medium",
+      "query": "Find items that have more than 5 orders.",
+      "true_sql": "SELECT im.ITEM_EDESC, COUNT(*) AS ORDER_COUNT FROM SA_SALES_ORDER o JOIN IP_ITEM_MASTER_SETUP im ON o.ITEM_CODE = im.ITEM_CODE AND o.COMPANY_CODE = im.COMPANY_CODE WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' GROUP BY im.ITEM_EDESC HAVING COUNT(*) > 5 ORDER BY ORDER_COUNT DESC"
+    },
+    {
+      "id": 46,
+      "type": "medium",
+      "query": "Show average total price by branch.",
+      "true_sql": "SELECT o.BRANCH_CODE, AVG(o.CALC_TOTAL_PRICE) AS AVG_TOTAL_PRICE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' GROUP BY o.BRANCH_CODE ORDER BY AVG_TOTAL_PRICE DESC"
+    },
+    {
+      "id": 47,
+      "type": "medium",
+      "query": "Return orders whose unit price is above the average for the company.",
+      "true_sql": "SELECT o.CUSTOMER_CODE, o.ITEM_CODE, o.UNIT_PRICE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' AND o.UNIT_PRICE > (SELECT AVG(o2.UNIT_PRICE) FROM SA_SALES_ORDER o2 WHERE o2.COMPANY_CODE = '01' AND o2.DELETED_FLAG = 'N') ORDER BY o.UNIT_PRICE DESC"
+    },
+    {
+      "id": 48,
+      "type": "medium",
+      "query": "List customers with more than 3 orders in 2025.",
+      "true_sql": "SELECT o.CUSTOMER_CODE, COUNT(*) AS ORDER_COUNT FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' AND TRUNC(o.ORDER_DATE) >= TO_DATE('2025-01-01', 'YYYY-MM-DD') AND TRUNC(o.ORDER_DATE) < TO_DATE('2026-01-01', 'YYYY-MM-DD') GROUP BY o.CUSTOMER_CODE HAVING COUNT(*) > 3 ORDER BY ORDER_COUNT DESC"
+    },
+    {
+      "id": 49,
+      "type": "medium",
+      "query": "Find the highest priced order per branch.",
+      "true_sql": "SELECT o.BRANCH_CODE, MAX(o.CALC_TOTAL_PRICE) AS MAX_TOTAL_PRICE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' GROUP BY o.BRANCH_CODE ORDER BY MAX_TOTAL_PRICE DESC"
+    },
+    {
+      "id": 50,
+      "type": "medium",
+      "query": "Show total sales by item for the last 30 days.",
+      "true_sql": "SELECT im.ITEM_EDESC, SUM(o.CALC_TOTAL_PRICE) AS TOTAL_SALES FROM SA_SALES_ORDER o JOIN IP_ITEM_MASTER_SETUP im ON o.ITEM_CODE = im.ITEM_CODE AND o.COMPANY_CODE = im.COMPANY_CODE WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' AND TRUNC(o.ORDER_DATE) >= TRUNC(SYSDATE) - 30 AND TRUNC(o.ORDER_DATE) <= TRUNC(SYSDATE) GROUP BY im.ITEM_EDESC ORDER BY TOTAL_SALES DESC"
+    },
+    {
+      "id": 51,
+      "type": "medium",
+      "query": "Identify items with average unit price above 75.",
+      "true_sql": "SELECT im.ITEM_EDESC, AVG(o.UNIT_PRICE) AS AVG_UNIT_PRICE FROM SA_SALES_ORDER o JOIN IP_ITEM_MASTER_SETUP im ON o.ITEM_CODE = im.ITEM_CODE AND o.COMPANY_CODE = im.COMPANY_CODE WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' GROUP BY im.ITEM_EDESC HAVING AVG(o.UNIT_PRICE) > 75 ORDER BY AVG_UNIT_PRICE DESC"
+    },
+    {
+      "id": 52,
+      "type": "medium",
+      "query": "Show monthly revenue for branch 01.03.",
+      "true_sql": "SELECT TO_CHAR(o.ORDER_DATE, 'YYYY-MM') AS ORDER_MONTH, SUM(o.CALC_TOTAL_PRICE) AS TOTAL_REVENUE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.BRANCH_CODE = '01.03' AND o.DELETED_FLAG = 'N' GROUP BY TO_CHAR(o.ORDER_DATE, 'YYYY-MM') ORDER BY ORDER_MONTH"
+    },
+    {
+      "id": 53,
+      "type": "medium",
+      "query": "List items with revenue above 2000 in 2025.",
+      "true_sql": "SELECT im.ITEM_EDESC, SUM(o.CALC_TOTAL_PRICE) AS TOTAL_SALES FROM SA_SALES_ORDER o JOIN IP_ITEM_MASTER_SETUP im ON o.ITEM_CODE = im.ITEM_CODE AND o.COMPANY_CODE = im.COMPANY_CODE WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' AND TRUNC(o.ORDER_DATE) >= TO_DATE('2025-01-01', 'YYYY-MM-DD') AND TRUNC(o.ORDER_DATE) < TO_DATE('2026-01-01', 'YYYY-MM-DD') GROUP BY im.ITEM_EDESC HAVING SUM(o.CALC_TOTAL_PRICE) > 2000 ORDER BY TOTAL_SALES DESC"
+    },
+    {
+      "id": 54,
+      "type": "medium",
+      "query": "Find branches with more than 100 orders in 2025.",
+      "true_sql": "SELECT o.BRANCH_CODE, COUNT(*) AS ORDER_COUNT FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' AND TRUNC(o.ORDER_DATE) >= TO_DATE('2025-01-01', 'YYYY-MM-DD') AND TRUNC(o.ORDER_DATE) < TO_DATE('2026-01-01', 'YYYY-MM-DD') GROUP BY o.BRANCH_CODE HAVING COUNT(*) > 100 ORDER BY ORDER_COUNT DESC"
+    },
+    {
+      "id": 55,
+      "type": "medium",
+      "query": "Show total sales by customer for July 2025.",
+      "true_sql": "SELECT o.CUSTOMER_CODE, SUM(o.CALC_TOTAL_PRICE) AS TOTAL_AMOUNT FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' AND TRUNC(o.ORDER_DATE) >= TO_DATE('2025-07-01', 'YYYY-MM-DD') AND TRUNC(o.ORDER_DATE) < TO_DATE('2025-08-01', 'YYYY-MM-DD') GROUP BY o.CUSTOMER_CODE ORDER BY TOTAL_AMOUNT DESC"
+    },
+    {
+      "id": 56,
+      "type": "medium",
+      "query": "Find the most expensive item by average price.",
+      "true_sql": "SELECT im.ITEM_EDESC, AVG(o.UNIT_PRICE) AS AVG_UNIT_PRICE FROM SA_SALES_ORDER o JOIN IP_ITEM_MASTER_SETUP im ON o.ITEM_CODE = im.ITEM_CODE AND o.COMPANY_CODE = im.COMPANY_CODE WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' GROUP BY im.ITEM_EDESC ORDER BY AVG_UNIT_PRICE DESC"
+    },
+    {
+      "id": 57,
+      "type": "medium",
+      "query": "Show all orders with total price above the branch average.",
+      "true_sql": "SELECT o.BRANCH_CODE, o.CUSTOMER_CODE, o.CALC_TOTAL_PRICE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' AND o.CALC_TOTAL_PRICE > (SELECT AVG(o2.CALC_TOTAL_PRICE) FROM SA_SALES_ORDER o2 WHERE o2.COMPANY_CODE = '01' AND o2.BRANCH_CODE = o.BRANCH_CODE AND o2.DELETED_FLAG = 'N') ORDER BY o.BRANCH_CODE, o.CALC_TOTAL_PRICE DESC"
+    },
+    {
+      "id": 58,
+      "type": "medium",
+      "query": "Retrieve customers who ordered in both January and February 2025.",
+      "true_sql": "SELECT o.CUSTOMER_CODE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' AND TRUNC(o.ORDER_DATE) >= TO_DATE('2025-01-01', 'YYYY-MM-DD') AND TRUNC(o.ORDER_DATE) < TO_DATE('2025-03-01', 'YYYY-MM-DD') GROUP BY o.CUSTOMER_CODE HAVING COUNT(DISTINCT TO_CHAR(o.ORDER_DATE, 'YYYY-MM')) > 1 ORDER BY o.CUSTOMER_CODE"
+    },
+    {
+      "id": 59,
+      "type": "medium",
+      "query": "Show the total number of distinct customers per branch.",
+      "true_sql": "SELECT o.BRANCH_CODE, COUNT(DISTINCT o.CUSTOMER_CODE) AS DISTINCT_CUSTOMERS FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' GROUP BY o.BRANCH_CODE ORDER BY DISTINCT_CUSTOMERS DESC"
+    },
+    {
+      "id": 60,
+      "type": "medium",
+      "query": "List branches whose total sales exceeded 100000.",
+      "true_sql": "SELECT o.BRANCH_CODE, SUM(o.CALC_TOTAL_PRICE) AS TOTAL_SALES FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' GROUP BY o.BRANCH_CODE HAVING SUM(o.CALC_TOTAL_PRICE) > 100000 ORDER BY TOTAL_SALES DESC"
+    },
+    {
+      "id": 61,
+      "type": "hard",
+      "query": "Find the top 5 customers by total sales for items whose description contains pen.",
+      "true_sql": "SELECT * FROM (SELECT o.CUSTOMER_CODE, SUM(o.CALC_TOTAL_PRICE) AS TOTAL_SALES FROM SA_SALES_ORDER o JOIN IP_ITEM_MASTER_SETUP im ON o.ITEM_CODE = im.ITEM_CODE AND o.COMPANY_CODE = im.COMPANY_CODE WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' AND LOWER(im.ITEM_EDESC) LIKE '%pen%' GROUP BY o.CUSTOMER_CODE ORDER BY TOTAL_SALES DESC) WHERE ROWNUM <= 5"
+    },
+    {
+      "id": 62,
+      "type": "hard",
+      "query": "Show monthly sales growth compared to the previous month for branch 01.02.",
+      "true_sql": "SELECT ORDER_MONTH, TOTAL_REVENUE, LAG(TOTAL_REVENUE) OVER (ORDER BY ORDER_MONTH) AS PREVIOUS_MONTH_REVENUE FROM (SELECT TO_CHAR(o.ORDER_DATE, 'YYYY-MM') AS ORDER_MONTH, SUM(o.CALC_TOTAL_PRICE) AS TOTAL_REVENUE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.BRANCH_CODE = '01.02' AND o.DELETED_FLAG = 'N' GROUP BY TO_CHAR(o.ORDER_DATE, 'YYYY-MM')) ORDER BY ORDER_MONTH"
+    },
+    {
+      "id": 63,
+      "type": "hard",
+      "query": "Find customers whose total sales are above the overall average and have at least 5 orders.",
+      "true_sql": "SELECT o.CUSTOMER_CODE, COUNT(*) AS ORDER_COUNT, SUM(o.CALC_TOTAL_PRICE) AS TOTAL_SALES FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' GROUP BY o.CUSTOMER_CODE HAVING COUNT(*) >= 5 AND SUM(o.CALC_TOTAL_PRICE) > (SELECT AVG(TOTAL_SALES) FROM (SELECT SUM(o2.CALC_TOTAL_PRICE) AS TOTAL_SALES FROM SA_SALES_ORDER o2 WHERE o2.COMPANY_CODE = '01' AND o2.DELETED_FLAG = 'N' GROUP BY o2.CUSTOMER_CODE)) ORDER BY TOTAL_SALES DESC"
+    },
+    {
+      "id": 64,
+      "type": "hard",
+      "query": "List items that had sales in both the first half and second half of 2025.",
+      "true_sql": "SELECT im.ITEM_EDESC FROM SA_SALES_ORDER o JOIN IP_ITEM_MASTER_SETUP im ON o.ITEM_CODE = im.ITEM_CODE AND o.COMPANY_CODE = im.COMPANY_CODE WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' AND TRUNC(o.ORDER_DATE) >= TO_DATE('2025-01-01', 'YYYY-MM-DD') AND TRUNC(o.ORDER_DATE) < TO_DATE('2026-01-01', 'YYYY-MM-DD') GROUP BY im.ITEM_EDESC HAVING SUM(CASE WHEN TRUNC(o.ORDER_DATE) < TO_DATE('2025-07-01', 'YYYY-MM-DD') THEN 1 ELSE 0 END) > 0 AND SUM(CASE WHEN TRUNC(o.ORDER_DATE) >= TO_DATE('2025-07-01', 'YYYY-MM-DD') THEN 1 ELSE 0 END) > 0"
+    },
+    {
+      "id": 65,
+      "type": "hard",
+      "query": "Show the 3 branches with the highest sales growth from January to June 2025.",
+      "true_sql": "SELECT * FROM (SELECT o.BRANCH_CODE, SUM(CASE WHEN TRUNC(o.ORDER_DATE) < TO_DATE('2025-07-01', 'YYYY-MM-DD') THEN o.CALC_TOTAL_PRICE ELSE 0 END) AS FIRST_HALF_SALES, SUM(CASE WHEN TRUNC(o.ORDER_DATE) >= TO_DATE('2025-07-01', 'YYYY-MM-DD') THEN o.CALC_TOTAL_PRICE ELSE 0 END) AS SECOND_HALF_SALES FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' AND TRUNC(o.ORDER_DATE) >= TO_DATE('2025-01-01', 'YYYY-MM-DD') AND TRUNC(o.ORDER_DATE) < TO_DATE('2026-01-01', 'YYYY-MM-DD') GROUP BY o.BRANCH_CODE ORDER BY (SECOND_HALF_SALES - FIRST_HALF_SALES) DESC) WHERE ROWNUM <= 3"
+    },
+    {
+      "id": 66,
+      "type": "hard",
+      "query": "Find customers with increasing order volume month over month.",
+      "true_sql": "SELECT CUSTOMER_CODE, ORDER_MONTH, ORDER_COUNT FROM (SELECT o.CUSTOMER_CODE, TO_CHAR(o.ORDER_DATE, 'YYYY-MM') AS ORDER_MONTH, COUNT(*) AS ORDER_COUNT FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' GROUP BY o.CUSTOMER_CODE, TO_CHAR(o.ORDER_DATE, 'YYYY-MM') ORDER BY o.CUSTOMER_CODE, ORDER_MONTH)"
+    },
+    {
+      "id": 67,
+      "type": "hard",
+      "query": "Show the top 10 items by revenue in the last quarter.",
+      "true_sql": "SELECT * FROM (SELECT im.ITEM_EDESC, SUM(o.CALC_TOTAL_PRICE) AS TOTAL_REVENUE FROM SA_SALES_ORDER o JOIN IP_ITEM_MASTER_SETUP im ON o.ITEM_CODE = im.ITEM_CODE AND o.COMPANY_CODE = im.COMPANY_CODE WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' AND TRUNC(o.ORDER_DATE) >= ADD_MONTHS(TRUNC(SYSDATE), -3) AND TRUNC(o.ORDER_DATE) <= TRUNC(SYSDATE) GROUP BY im.ITEM_EDESC ORDER BY TOTAL_REVENUE DESC) WHERE ROWNUM <= 10"
+    },
+    {
+      "id": 68,
+      "type": "hard",
+      "query": "Find branches where average order value is above the company average.",
+      "true_sql": "SELECT o.BRANCH_CODE, AVG(o.CALC_TOTAL_PRICE) AS AVG_ORDER_VALUE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' GROUP BY o.BRANCH_CODE HAVING AVG(o.CALC_TOTAL_PRICE) > (SELECT AVG(o2.CALC_TOTAL_PRICE) FROM SA_SALES_ORDER o2 WHERE o2.COMPANY_CODE = '01' AND o2.DELETED_FLAG = 'N') ORDER BY AVG_ORDER_VALUE DESC"
+    },
+    {
+      "id": 69,
+      "type": "hard",
+      "query": "List customers whose latest order was after their first order by at least 90 days.",
+      "true_sql": "SELECT o.CUSTOMER_CODE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' GROUP BY o.CUSTOMER_CODE HAVING MAX(o.ORDER_DATE) - MIN(o.ORDER_DATE) >= 90 ORDER BY o.CUSTOMER_CODE"
+    },
+    {
+      "id": 70,
+      "type": "hard",
+      "query": "Show the weekday distribution of orders for branch 01.02.",
+      "true_sql": "SELECT TO_CHAR(o.ORDER_DATE, 'DAY') AS ORDER_DAY, COUNT(*) AS ORDER_COUNT FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.BRANCH_CODE = '01.02' AND o.DELETED_FLAG = 'N' GROUP BY TO_CHAR(o.ORDER_DATE, 'DAY') ORDER BY ORDER_COUNT DESC"
+    },
+    {
+      "id": 71,
+      "type": "hard",
+      "query": "Find items with both high volume and high average price.",
+      "true_sql": "SELECT im.ITEM_EDESC, COUNT(*) AS ORDER_COUNT, AVG(o.UNIT_PRICE) AS AVG_UNIT_PRICE FROM SA_SALES_ORDER o JOIN IP_ITEM_MASTER_SETUP im ON o.ITEM_CODE = im.ITEM_CODE AND o.COMPANY_CODE = im.COMPANY_CODE WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' GROUP BY im.ITEM_EDESC HAVING COUNT(*) > 10 AND AVG(o.UNIT_PRICE) > 100 ORDER BY AVG_UNIT_PRICE DESC"
+    },
+    {
+      "id": 72,
+      "type": "hard",
+      "query": "Reveal customers with declining sales over the last two months.",
+      "true_sql": "SELECT CUSTOMER_CODE, CURRENT_MONTH_SALES, PREVIOUS_MONTH_SALES FROM (SELECT o.CUSTOMER_CODE, SUM(CASE WHEN TRUNC(o.ORDER_DATE) >= ADD_MONTHS(TRUNC(SYSDATE), -1) THEN o.CALC_TOTAL_PRICE ELSE 0 END) AS CURRENT_MONTH_SALES, SUM(CASE WHEN TRUNC(o.ORDER_DATE) < ADD_MONTHS(TRUNC(SYSDATE), -1) AND TRUNC(o.ORDER_DATE) >= ADD_MONTHS(TRUNC(SYSDATE), -2) THEN o.CALC_TOTAL_PRICE ELSE 0 END) AS PREVIOUS_MONTH_SALES FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' GROUP BY o.CUSTOMER_CODE HAVING SUM(CASE WHEN TRUNC(o.ORDER_DATE) >= ADD_MONTHS(TRUNC(SYSDATE), -1) THEN o.CALC_TOTAL_PRICE ELSE 0 END) < SUM(CASE WHEN TRUNC(o.ORDER_DATE) < ADD_MONTHS(TRUNC(SYSDATE), -1) AND TRUNC(o.ORDER_DATE) >= ADD_MONTHS(TRUNC(SYSDATE), -2) THEN o.CALC_TOTAL_PRICE ELSE 0 END)) ORDER BY CURRENT_MONTH_SALES DESC)"
+    },
+    {
+      "id": 73,
+      "type": "hard",
+      "query": "Show items whose revenue share exceeds 10 percent of total revenue.",
+      "true_sql": "SELECT im.ITEM_EDESC, SUM(o.CALC_TOTAL_PRICE) AS TOTAL_REVENUE FROM SA_SALES_ORDER o JOIN IP_ITEM_MASTER_SETUP im ON o.ITEM_CODE = im.ITEM_CODE AND o.COMPANY_CODE = im.COMPANY_CODE WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' GROUP BY im.ITEM_EDESC HAVING SUM(o.CALC_TOTAL_PRICE) > (SELECT 0.10 * SUM(o2.CALC_TOTAL_PRICE) FROM SA_SALES_ORDER o2 WHERE o2.COMPANY_CODE = '01' AND o2.DELETED_FLAG = 'N') ORDER BY TOTAL_REVENUE DESC"
+    },
+    {
+      "id": 74,
+      "type": "hard",
+      "query": "Find the customer with the highest average order value in 2025.",
+      "true_sql": "SELECT * FROM (SELECT o.CUSTOMER_CODE, AVG(o.CALC_TOTAL_PRICE) AS AVG_ORDER_VALUE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' AND TRUNC(o.ORDER_DATE) >= TO_DATE('2025-01-01', 'YYYY-MM-DD') AND TRUNC(o.ORDER_DATE) < TO_DATE('2026-01-01', 'YYYY-MM-DD') GROUP BY o.CUSTOMER_CODE ORDER BY AVG_ORDER_VALUE DESC) WHERE ROWNUM <= 1"
+    },
+    {
+      "id": 75,
+      "type": "hard",
+      "query": "Show branch-wise sales rank for the top 5 branches.",
+      "true_sql": "SELECT * FROM (SELECT o.BRANCH_CODE, SUM(o.CALC_TOTAL_PRICE) AS TOTAL_SALES FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' GROUP BY o.BRANCH_CODE ORDER BY TOTAL_SALES DESC) WHERE ROWNUM <= 5"
+    },
+    {
+      "id": 76,
+      "type": "hard",
+      "query": "List customers who placed orders in the first quarter and the fourth quarter of 2025.",
+      "true_sql": "SELECT o.CUSTOMER_CODE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' AND o.DELETED_FLAG = 'N' AND TRUNC(o.ORDER_DATE) >= TO_DATE('2025-01-01', 'YYYY-MM-DD') AND TRUNC(o.ORDER_DATE) < TO_DATE('2026-01-01', 'YYYY-MM-DD') GROUP BY o.CUSTOMER_CODE HAVING SUM(CASE WHEN TRUNC(o.ORDER_DATE) < TO_DATE('2025-07-01', 'YYYY-MM-DD') THEN 1 ELSE 0 END) > 0 AND SUM(CASE WHEN TRUNC(o.ORDER_DATE) >= TO_DATE('2025-10-01', 'YYYY-MM-DD') THEN 1 ELSE 0 END) > 0 ORDER BY o.CUSTOMER_CODE"
+    }
+  ]
+}
