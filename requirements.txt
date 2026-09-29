@@ -1,6 +1,7 @@
 fastapi
 oracledb
 ollama
+openai
 qdrant-client
 sentence-transformers
 nepali-datetime
