@@ -4,6 +4,7 @@ Text_to_SQL is a FastAPI-based natural language to SQL service for sales reporti
 
 The local development stack is fully containerized for the supporting services: Oracle, PostgreSQL, Redis, and Qdrant.
 
+<img width="1600" height="800" alt="Image" src="https://github.com/user-attachments/assets/9446a63f-dd9f-4e71-b337-823386ced76b" />
 
 
 ## System Overview
