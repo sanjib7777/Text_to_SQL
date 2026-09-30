@@ -124,40 +124,34 @@ XKIRO_BASE_URL=
 XKIRO_API_KEY=
 ```
 
-When using the provided Docker Compose stack locally, these values should match the service names, ports, usernames, and passwords defined in `docker-compose.yml`.
+When using the provided Docker Compose stack, these values should match the service names, ports, usernames, and passwords defined in `docker-compose.yml`. When connecting to an existing Oracle instance, use the host, service name, schema user, and password provided for that environment.
 
 ## Database Seeding
 
 ### Oracle
 
-Oracle is seeded from:
+For development and testing, Oracle can be seeded from:
 
 ```text
 oracle/seed/001_core_sales_demo.sql
 ```
 
-The seed creates tables in the `SUYOG` schema inside `FREEPDB1`:
+This file is a demo seed. It creates a minimal set of authentication and sales tables so the application can be exercised without depending on a production Oracle schema.
 
-```sql
-ALTER SESSION SET CONTAINER = FREEPDB1;
-ALTER SESSION SET CURRENT_SCHEMA = SUYOG;
-```
-
-Currently seeded Oracle tables:
+The current demo seed includes:
 
 - `SC_APPLICATION_USERS`
 - `IP_ITEM_MASTER_SETUP`
 - `SA_SALES_ORDER`
 
-Seeded login user:
+Before using this project with your own Oracle database, review and adapt the seed file:
 
-```text
-username: suyog
-password: Test@123
-company_code: 01
-```
+- Update the target pluggable database or service if required.
+- Update the target schema/user to match your Oracle configuration.
+- Replace the demo login rows with test users appropriate for your environment.
+- Expand the seed with the business tables needed by your query scenarios.
 
-The Oracle init seed only runs when the Oracle data volume is first created. To force a fresh Oracle seed:
+The Oracle init seed only runs when the Oracle data volume is first created. If the seed file changes and you need to re-run it against the Dockerized Oracle instance, reset the Oracle volume:
 
 ```bash
 docker compose down
@@ -263,8 +257,8 @@ Login:
 curl -X POST "http://127.0.0.1:8000/api/auth/login" \
   -H "Content-Type: application/json" \
   -d '{
-    "username": "suyog",
-    "password": "Test@123"
+    "username": "<application_username>",
+    "password": "<application_password>"
   }'
 ```
 
@@ -275,7 +269,7 @@ curl -X POST "http://127.0.0.1:8000/api/query" \
   -H "Content-Type: application/json" \
   -d '{
     "question": "Show me the sales orders, sorted by order date, along with the order number, order date, customer, item, and total price.",
-    "username": "suyog",
+    "username": "<application_username>",
     "company_code": "01",
     "conversation_id": null,
     "query_id": null,
@@ -326,9 +320,9 @@ This means Oracle authentication failed before the app could validate the user.
 Check:
 
 - Oracle container is running and healthy.
-- App config points to `localhost:1521/FREEPDB1`.
-- Tables exist under the `SUYOG` schema.
-- `SC_APPLICATION_USERS` contains `suyog` / `Test@123`.
+- App config points to the correct Oracle host, port, service, user, and password.
+- The configured Oracle schema contains `SC_APPLICATION_USERS`.
+- The login user exists in `SC_APPLICATION_USERS`.
 - Uvicorn was restarted after config changes.
 
 ### `History service is temporarily unavailable`
@@ -385,8 +379,6 @@ vector_db/            Qdrant collection/indexing/embedding scripts
 ## Notes
 
 - Oracle DB credentials are not the same as application login credentials.
-- Local Oracle DB user is `suyog` / `suyogTest`.
-- Application login user is `suyog` / `Test@123`.
 - PostgreSQL stores app state; Oracle stores business/login/source data.
 - Qdrant stores schema and SQL example embeddings; it does not store Oracle table rows.
 
