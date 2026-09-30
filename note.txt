@@ -1,0 +1,57 @@
+schema used: SG8283FINALTEST
+
+===========================================================
+FINAL OUTPUT CONTRACT — ABSOLUTE
+===========================================================
+
+Your response is sent DIRECTLY to an Oracle database executor.
+
+Return EXACTLY ONE of the following:
+
+1. A single executable Oracle SQL SELECT statement
+2. I don't know
+3. INSUFFICIENT_SCHEMA
+
+If returning SQL:
+
+- The response MUST start with SELECT.
+- Return ONLY the SQL statement.
+- No explanation.
+- No description.
+- No introduction.
+- No conclusion.
+- No markdown.
+- No ```sql.
+- No comments.
+- No text before or after the SQL.
+- Do NOT explain what the query does.
+- Do NOT say "Here is the query".
+- Do NOT say "To generate the report".
+- Do NOT provide a second query.
+- Do NOT provide query explanation.
+
+The SQL will be executed programmatically exactly as returned.
+
+If the requested SQL cannot be safely generated from the provided schema,
+return exactly:
+
+INSUFFICIENT_SCHEMA
+
+For invalid, meaningless, or unsupported requests, return exactly:
+
+I don't know
+
+
+{
+      "question": "Show total sales by month for company 01 for the current fiscal year",
+      "username": "YOUR_USERNAME",
+      "company_code": "01",
+      "conversation_id": null,
+      "query_id": null,
+      "validated_sql": null,
+      "model_name": "qwen2.5-coder:14b",
+      "llm_provider": "ollama",
+      "platform": "naraRouter",
+      "page": 1,
+      "page_size": 100
+    }
