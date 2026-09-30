@@ -79,39 +79,12 @@ docker compose ps
 
 For local testing, use the Docker Compose stack as the database and infrastructure layer. The usual setup sequence is:
 
-1. Create a local `.env` file in the project root.
-2. Start Oracle, PostgreSQL, Redis, and Qdrant with Docker Compose.
-3. Let the Oracle demo seed initialize the local Oracle schema.
+1. Configure `.env` as described in [Environment Configuration](#environment-configuration).
+2. Review `oracle/seed/001_core_sales_demo.sql` and adapt it if you are using the bundled Oracle container.
+3. Start Oracle, PostgreSQL, Redis, and Qdrant with Docker Compose.
 4. Create PostgreSQL app tables.
 5. Create and populate Qdrant collections.
 6. Run the FastAPI server.
-
-When using the bundled `docker-compose.yml`, configure `.env` to point at the local containers. The values must match the Compose service configuration. Ports, database names, service names, usernames, and passwords can be changed as required, but the same values must be kept consistent across `.env`, `docker-compose.yml`, and any seed scripts.
-
-```env
-ORACLE_HOST=<oracle_host>
-ORACLE_PORT=<oracle_port>
-ORACLE_SERVICE=<oracle_service_name>
-ORACLE_DB_USER=<oracle_schema_user>
-ORACLE_DB_PASS=<oracle_schema_password>
-ORACLE_INSTANT_CLIENT_LOC=
-
-POSTGRES_HOST=<postgres_host>
-POSTGRES_PORT=<postgres_port>
-POSTGRES_DB=<postgres_database>
-POSTGRES_USER=<postgres_user>
-POSTGRES_PASSWORD=<postgres_password>
-
-QDRANT_HOST=<qdrant_host>
-QDRANT_PORT=<qdrant_port>
-
-REDIS_HOST=<redis_host>
-REDIS_PORT=<redis_port>
-REDIS_DB=<redis_database_number>
-REDIS_TTL=<cache_ttl_seconds>
-```
-
-If you are using the bundled Oracle container, review `oracle/seed/001_core_sales_demo.sql` before first startup. Update the seed's target container/service, schema/user, demo login rows, and demo business tables to match the Oracle settings you choose. If you are using an external Oracle database instead, replace the Oracle values with that database's host, port, service name, schema user, and password. The configured Oracle schema must contain the tables required by the application, especially `SC_APPLICATION_USERS` for login.
 
 Run the local setup commands:
 
@@ -136,37 +109,41 @@ After these steps, start the API:
 
 The application reads configuration from `.env` through `settings.py`. Each developer should create a local `.env` file in the project root and provide values for the services they are running.
 
+When using the bundled `docker-compose.yml`, configure `.env` to point at the local containers. Ports, database names, service names, usernames, and passwords can be changed as required, but the same values must be kept consistent across `.env`, `docker-compose.yml`, and any Oracle seed scripts.
+
+If you are using an external Oracle database instead of the bundled Oracle container, use that database's host, port, service name, schema user, and password. The configured Oracle schema must contain the tables required by the application, especially `SC_APPLICATION_USERS` for login.
+
 Oracle connection settings:
 
 ```env
-ORACLE_HOST=
-ORACLE_PORT=
-ORACLE_SERVICE=
-ORACLE_DB_USER=
-ORACLE_DB_PASS=
+ORACLE_HOST=<oracle_host>
+ORACLE_PORT=<oracle_port>
+ORACLE_SERVICE=<oracle_service_name>
+ORACLE_DB_USER=<oracle_schema_user>
+ORACLE_DB_PASS=<oracle_schema_password>
 ORACLE_INSTANT_CLIENT_LOC=
 ```
 
 PostgreSQL connection settings:
 
 ```env
-POSTGRES_HOST=
-POSTGRES_PORT=
-POSTGRES_DB=
-POSTGRES_USER=
-POSTGRES_PASSWORD=
+POSTGRES_HOST=<postgres_host>
+POSTGRES_PORT=<postgres_port>
+POSTGRES_DB=<postgres_database>
+POSTGRES_USER=<postgres_user>
+POSTGRES_PASSWORD=<postgres_password>
 ```
 
 Qdrant and Redis settings:
 
 ```env
-QDRANT_HOST=
-QDRANT_PORT=
+QDRANT_HOST=<qdrant_host>
+QDRANT_PORT=<qdrant_port>
 
-REDIS_HOST=
-REDIS_PORT=
-REDIS_DB=
-REDIS_TTL=
+REDIS_HOST=<redis_host>
+REDIS_PORT=<redis_port>
+REDIS_DB=<redis_database_number>
+REDIS_TTL=<cache_ttl_seconds>
 ```
 
 LLM settings:
@@ -179,10 +156,8 @@ LLM_PLATFORM=
 NARAROUTER_BASE_URL=
 NARAROUTER_API_KEY=
 XKIRO_BASE_URL=
-XKIRO_API_KEY=
+XKIRO_API_KEY=<xkiro_api_key>
 ```
-
-When using the provided Docker Compose stack, these values should match the service names, ports, usernames, and passwords defined in `docker-compose.yml`. When connecting to an existing Oracle instance, use the host, service name, schema user, and password provided for that environment.
 
 ## Database Seeding
 

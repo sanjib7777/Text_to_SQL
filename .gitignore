@@ -5,7 +5,7 @@ __pycache__/
 .vscode/
 bot_report/
 bot_report.zip
-notes.txt
+note.txt
 old_versions.zip
 tables_info_schema.json
 sales_report_eval_queries_natural_language.json
