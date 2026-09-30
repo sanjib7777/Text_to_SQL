@@ -261,19 +261,14 @@ python3 json_to_text.py
 cd ..
 ```
 
-Create Qdrant collections:
+Create the required Qdrant collections before indexing. Use your preferred Qdrant administration method, such as the Qdrant dashboard or your environment's Qdrant management tooling. The collections used by the current indexing scripts are:
 
-```bash
-.venv/bin/python - <<'PY'
-from vector_db.qdrant_test import QdrantDB
-from vector_db.config import SCHEMA_COLLECTION, SQL_EXAMPLES_COLLECTION, EMBEDDING_DIMENSION
-
-qdrant = QdrantDB()
-qdrant.create_collection(SCHEMA_COLLECTION, vector_size=EMBEDDING_DIMENSION)
-qdrant.create_collection(SQL_EXAMPLES_COLLECTION, vector_size=EMBEDDING_DIMENSION)
-print([c.name for c in qdrant.get_client().get_collections().collections])
-PY
+```text
+sales_schema
+sql_examples
 ```
+
+Both collections must use the embedding dimension configured by `EMBEDDING_DIMENSION` in `settings.py`.
 
 Insert table schema data:
 
@@ -302,41 +297,42 @@ sql_examples: 100 points
 
 The API is mounted under `/api`.
 
-Health check:
+Available routes:
 
-```bash
-curl http://127.0.0.1:8000/api/health
+```text
+GET  /api/health
+POST /api/auth/login
+GET  /api/conversations
+GET  /api/conversations/{conversation_id}
+GET  /api/postgres-test
+POST /api/query
 ```
 
-Login:
+Login request body:
 
-```bash
-curl -X POST "http://127.0.0.1:8000/api/auth/login" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "username": "<application_username>",
-    "password": "<application_password>"
-  }'
+```json
+{
+  "username": "<application_username>",
+  "password": "<application_password>"
+}
 ```
 
-Query:
+Query request body:
 
-```bash
-curl -X POST "http://127.0.0.1:8000/api/query" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "question": "Show me the sales orders, sorted by order date, along with the order number, order date, customer, item, and total price.",
-    "username": "<application_username>",
-    "company_code": "01",
-    "conversation_id": null,
-    "query_id": null,
-    "validated_sql": null,
-    "model_name": "qwen2.5-coder:14b",
-    "llm_provider": "ollama",
-    "platform": "naraRouter",
-    "page": 1,
-    "page_size": 100
-  }'
+```json
+{
+  "question": "Show me the sales orders, sorted by order date, along with the order number, order date, customer, item, and total price.",
+  "username": "<application_username>",
+  "company_code": "01",
+  "conversation_id": null,
+  "query_id": null,
+  "validated_sql": null,
+  "model_name": "qwen2.5-coder:14b",
+  "llm_provider": "ollama",
+  "platform": "naraRouter",
+  "page": 1,
+  "page_size": 100
+}
 ```
 
 Example evaluation pair:
@@ -401,7 +397,6 @@ Run:
 
 ```bash
 docker compose up -d qdrant
-curl http://<qdrant_host>:<qdrant_port>/healthz
 ```
 
 If Qdrant is healthy but retrieval returns nothing, re-run the indexing scripts.
