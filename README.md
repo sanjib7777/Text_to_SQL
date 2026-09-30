@@ -4,9 +4,7 @@ Text_to_SQL is a FastAPI-based natural language to SQL service for sales reporti
 
 The local development stack is fully containerized for the supporting services: Oracle, PostgreSQL, Redis, and Qdrant.
 
-## Demo Video
 
-A demo video for the project will be included in this repository. It will show the local services running, user login, natural language query submission, schema retrieval, generated SQL execution, and returned results.
 
 ## System Overview
 
@@ -391,3 +389,9 @@ vector_db/            Qdrant collection/indexing/embedding scripts
 - Application login user is `suyog` / `Test@123`.
 - PostgreSQL stores app state; Oracle stores business/login/source data.
 - Qdrant stores schema and SQL example embeddings; it does not store Oracle table rows.
+
+## Demo Video
+
+A demo video for the project is shown below . It  shows the local services running, user login, natural language query submission, schema retrieval, generated SQL execution, and returned results.
+
+https://github.com/user-attachments/assets/a5f50675-a52e-422e-9a45-b6396d180616
