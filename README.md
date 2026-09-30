@@ -46,12 +46,12 @@ Client
 
 The Docker Compose stack defines:
 
-| Service | Container | Port | Purpose |
+| Service | Container | Default exposed port(s) | Purpose |
 | --- | --- | --- | --- |
-| Oracle | `txttosql-oracle` | `1521` | Local Oracle source DB |
-| PostgreSQL | `txttosql-postgres` | `5432` | App state/history DB |
-| Redis | `txttosql-redis` | `6379` | Cache |
-| Qdrant | `txttosql-qdrant` | `6333`, `6334` | Vector search |
+| Oracle | `txttosql-oracle` | configurable in `docker-compose.yml` | Local Oracle source DB |
+| PostgreSQL | `txttosql-postgres` | configurable in `docker-compose.yml` | App state/history DB |
+| Redis | `txttosql-redis` | configurable in `docker-compose.yml` | Cache |
+| Qdrant | `txttosql-qdrant` | configurable in `docker-compose.yml` | Vector search |
 
 Start all services:
 
@@ -72,6 +72,63 @@ Check service status:
 
 ```bash
 docker compose ps
+```
+
+## Local Development Setup
+
+For local testing, use the Docker Compose stack as the database and infrastructure layer. The usual setup sequence is:
+
+1. Create a local `.env` file in the project root.
+2. Start Oracle, PostgreSQL, Redis, and Qdrant with Docker Compose.
+3. Let the Oracle demo seed initialize the local Oracle schema.
+4. Create PostgreSQL app tables.
+5. Create and populate Qdrant collections.
+6. Run the FastAPI server.
+
+When using the bundled `docker-compose.yml`, configure `.env` to point at the local containers. The values must match the Compose service configuration. Ports, database names, service names, usernames, and passwords can be changed as required, but the same values must be kept consistent across `.env`, `docker-compose.yml`, and any seed scripts.
+
+```env
+ORACLE_HOST=<oracle_host>
+ORACLE_PORT=<oracle_port>
+ORACLE_SERVICE=<oracle_service_name>
+ORACLE_DB_USER=<oracle_schema_user>
+ORACLE_DB_PASS=<oracle_schema_password>
+ORACLE_INSTANT_CLIENT_LOC=
+
+POSTGRES_HOST=<postgres_host>
+POSTGRES_PORT=<postgres_port>
+POSTGRES_DB=<postgres_database>
+POSTGRES_USER=<postgres_user>
+POSTGRES_PASSWORD=<postgres_password>
+
+QDRANT_HOST=<qdrant_host>
+QDRANT_PORT=<qdrant_port>
+
+REDIS_HOST=<redis_host>
+REDIS_PORT=<redis_port>
+REDIS_DB=<redis_database_number>
+REDIS_TTL=<cache_ttl_seconds>
+```
+
+If you are using the bundled Oracle container, review `oracle/seed/001_core_sales_demo.sql` before first startup. Update the seed's target container/service, schema/user, demo login rows, and demo business tables to match the Oracle settings you choose. If you are using an external Oracle database instead, replace the Oracle values with that database's host, port, service name, schema user, and password. The configured Oracle schema must contain the tables required by the application, especially `SC_APPLICATION_USERS` for login.
+
+Run the local setup commands:
+
+```bash
+docker compose up -d
+.venv/bin/python -m postgres_db.setup_db
+cd sales
+python3 json_to_text.py
+cd ../vector_db
+../.venv/bin/python insert_into_qdrant.py
+../.venv/bin/python insert_sql_example.py
+cd ..
+```
+
+After these steps, start the API:
+
+```bash
+.venv/bin/python -m uvicorn main:app --reload --host 127.0.0.1 --port 8000
 ```
 
 ## Environment Configuration
@@ -344,7 +401,7 @@ Run:
 
 ```bash
 docker compose up -d qdrant
-curl http://127.0.0.1:6333/healthz
+curl http://<qdrant_host>:<qdrant_port>/healthz
 ```
 
 If Qdrant is healthy but retrieval returns nothing, re-run the indexing scripts.
