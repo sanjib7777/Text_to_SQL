@@ -78,38 +78,55 @@ docker compose ps
 
 ## Environment Configuration
 
-The application reads configuration from `.env` through `settings.py`.
+The application reads configuration from `.env` through `settings.py`. Each developer should create a local `.env` file in the project root and provide values for the services they are running.
 
-Default local Oracle configuration:
-
-```env
-ORACLE_HOST=localhost
-ORACLE_PORT=1521
-ORACLE_SERVICE=FREEPDB1
-ORACLE_DB_USER=suyog
-ORACLE_DB_PASS=suyogTest
-```
-
-Default local PostgreSQL configuration:
+Oracle connection settings:
 
 ```env
-POSTGRES_HOST=localhost
-POSTGRES_PORT=5432
-POSTGRES_DB=ai_report_assistant
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=postgres
+ORACLE_HOST=
+ORACLE_PORT=
+ORACLE_SERVICE=
+ORACLE_DB_USER=
+ORACLE_DB_PASS=
+ORACLE_INSTANT_CLIENT_LOC=
 ```
 
-Default local Qdrant and Redis configuration:
+PostgreSQL connection settings:
 
 ```env
-QDRANT_HOST=localhost
-QDRANT_PORT=6333
-
-REDIS_HOST=localhost
-REDIS_PORT=6379
-REDIS_DB=0
+POSTGRES_HOST=
+POSTGRES_PORT=
+POSTGRES_DB=
+POSTGRES_USER=
+POSTGRES_PASSWORD=
 ```
+
+Qdrant and Redis settings:
+
+```env
+QDRANT_HOST=
+QDRANT_PORT=
+
+REDIS_HOST=
+REDIS_PORT=
+REDIS_DB=
+REDIS_TTL=
+```
+
+LLM settings:
+
+```env
+OLLAMA_HOST=
+OLLAMA_MODEL=
+LLM_PROVIDER=
+LLM_PLATFORM=
+NARAROUTER_BASE_URL=
+NARAROUTER_API_KEY=
+XKIRO_BASE_URL=
+XKIRO_API_KEY=
+```
+
+When using the provided Docker Compose stack locally, these values should match the service names, ports, usernames, and passwords defined in `docker-compose.yml`.
 
 ## Database Seeding
 
@@ -148,34 +165,6 @@ The Oracle init seed only runs when the Oracle data volume is first created. To 
 docker compose down
 docker volume rm txttosql_oracle-data
 docker compose up -d oracle
-```
-
-Verify Oracle login data:
-
-```bash
-.venv/bin/python - <<'PY'
-from oracle.connection import OracleConnectionPool
-
-pool = OracleConnectionPool(min_connections=1, max_connections=2)
-
-try:
-    pool.start()
-    result = pool.execute_query("""
-        SELECT LOGIN_CODE, COMPANY_CODE
-        FROM SC_APPLICATION_USERS
-        WHERE LOGIN_CODE = :username
-          AND PASSWORD = :password
-    """, {"username": "suyog", "password": "Test@123"}, 1)
-    print(result)
-finally:
-    pool.close()
-PY
-```
-
-Expected result:
-
-```text
-{'columns': ['LOGIN_CODE', 'COMPANY_CODE'], 'rows': [('suyog', '01')]}
 ```
 
 ### PostgreSQL
@@ -287,7 +276,7 @@ Query:
 curl -X POST "http://127.0.0.1:8000/api/query" \
   -H "Content-Type: application/json" \
   -d '{
-    "question": "Show total sales by item",
+    "question": "Show me the sales orders, sorted by order date, along with the order number, order date, customer, item, and total price.",
     "username": "suyog",
     "company_code": "01",
     "conversation_id": null,
@@ -299,6 +288,15 @@ curl -X POST "http://127.0.0.1:8000/api/query" \
     "page": 1,
     "page_size": 100
   }'
+```
+
+Example evaluation pair:
+
+```json
+{
+  "query": "Show me the sales orders, sorted by order date, along with the order number, order date, customer, item, and total price.",
+  "true_sql": "SELECT o.ORDER_NO, o.ORDER_DATE, o.CUSTOMER_CODE, o.ITEM_CODE, o.CALC_TOTAL_PRICE FROM SA_SALES_ORDER o WHERE o.COMPANY_CODE = '01' ORDER BY o.ORDER_DATE"
+}
 ```
 
 ## Running the API
